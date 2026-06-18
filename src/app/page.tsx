@@ -161,7 +161,7 @@ export default function Home() {
           <p className="mb-4 sm:mb-6 text-[10px] tracking-[4px] text-gray-600 sm:text-xs sm:tracking-[6px]">
             AI-NATIVE ORGANIZATION
           </p>
-          <h1 className="mb-4 sm:mb-6 text-3xl font-black tracking-[3px] sm:text-4xl sm:tracking-[6px] md:text-5xl md:tracking-[8px] lg:text-6xl">
+          <h1 className="mb-4 sm:mb-6 text-3xl font-black tracking-[6px] leading-relaxed sm:text-4xl sm:tracking-[10px] md:text-5xl md:tracking-[14px] lg:text-6xl lg:tracking-[16px]">
             <span className="brand-gradient-text">{t.homeHeroTitle}</span>
           </h1>
           <p className="mx-auto mb-8 sm:mb-10 max-w-md text-sm leading-relaxed tracking-[1px] text-gray-400 sm:text-base sm:tracking-[2px] md:max-w-2xl md:text-lg">

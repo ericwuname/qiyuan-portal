@@ -85,6 +85,8 @@ export const t = {
   founderCancel: "取消",
   founderWrongPass: "密码错误，请重新输入",
   founderContactFirst: "请联系创始人",
+
+  pagePhilosophy: "组织哲学",
 } as const;
 
 export type TranslationKey = keyof typeof t;

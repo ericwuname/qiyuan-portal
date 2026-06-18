@@ -27,6 +27,7 @@ const pillars: Pillar[] = [
       { href: "/about", key: "navOrigin" },
       // Founder moved to standalone nav tab
       { href: "/vision", key: "navVision" },
+      { href: "/philosophy", key: "navPhilosophy" },
       { href: "/#philosophy", key: "navPhilosophy" },
     ],
   },
@@ -126,6 +127,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
     { href: "/updates", key: "navUpdates" },
     { href: "/skills", key: "navSkills" },
     { href: "/vision", key: "navVision" },
+      { href: "/philosophy", key: "navPhilosophy" },
     { href: "/about", key: "navOrigin" },
   ];
 

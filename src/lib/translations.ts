@@ -64,6 +64,27 @@ export const t = {
   notFoundMessage: "你访问的页面不存在。",
   errorTitle: "出错了",
   errorMessage: "请刷新页面重试。",
+
+  navFounderTab: "创始人",
+  navFounderResume: "个人简历",
+  navFounderFinanceSupply: "供应链财务BP",
+  navFounderFinanceStore: "门店财务BP",
+
+  pageFounderResume: "个人简历",
+  pageFounderFinanceSupply: "供应链财务BP",
+  pageFounderFinanceStore: "门店财务BP",
+
+  founderSummary: "启元智能创始人 · 吴涛",
+  founderDownloadResume: "下载简历 PDF",
+  founderViewResume: "查看完整简历",
+  founderViewSupply: "供应链财务BP案例",
+  founderViewStore: "门店财务BP案例",
+  founderPassRequired: "此页面需要联系创始人获取访问密码",
+  founderEnterPassword: "请输入访问密码",
+  founderConfirm: "确定",
+  founderCancel: "取消",
+  founderWrongPass: "密码错误，请重新输入",
+  founderContactFirst: "请联系创始人",
 } as const;
 
 export type TranslationKey = keyof typeof t;

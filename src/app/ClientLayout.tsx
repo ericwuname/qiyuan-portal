@@ -25,7 +25,7 @@ const pillars: Pillar[] = [
     id: "about", key: "navPillarAbout", desc: "Who we are · Where we come from · Where we go",
     items: [
       { href: "/about", key: "navOrigin" },
-      { href: "/founder", key: "navFounder" },
+      // Founder moved to standalone nav tab
       { href: "/vision", key: "navVision" },
       { href: "/#philosophy", key: "navPhilosophy" },
     ],
@@ -182,6 +182,14 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
             ))}
           </div>
 
+          {/* Founder standalone nav tab */}
+              <a
+                href="/founder"
+                className="px-4 py-2 rounded-lg text-sm tracking-[2px] transition-all border border-brand-gold/30 text-brand-gold hover:bg-brand-gold/10"
+              >
+                {t.navFounderTab}
+              </a>
+
           {/* Desktop: Right side */}
           <div className="hidden md:flex items-center gap-3 text-xs tracking-[1px]">
             <span className="text-gray-500 text-xs">{userName}</span>
@@ -222,6 +230,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
 
         <div className="mt-6 pt-4 border-t border-dark-border">
           <a href="/dashboard" onClick={closeMenu} className="text-base tracking-[2px] py-2 text-brand-gold hover:text-brand-gold/80 transition-colors block">{t.navDashboard}</a>
+          <a href="/founder" onClick={closeMenu} className="text-base tracking-[2px] py-2 text-brand-gold hover:text-brand-gold/80 transition-colors block">{t.navFounderTab}</a>
           <button onClick={() => { handleLogout(); closeMenu(); }} className="text-base tracking-[2px] py-2 text-red-400 hover:text-red-300 transition-colors text-left block w-full">退出登录 ({userName})</button>
         </div>
 

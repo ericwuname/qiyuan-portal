@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { t } from "@/lib/translations";
 
 function useReveal() {
   const ref = useRef<HTMLDivElement>(null);
@@ -134,59 +135,50 @@ export default function Home() {
   return (
     <main>
       {/* ========== HERO ========== */}
-      <section className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-4 sm:px-6 text-center">
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2">
-          <div className="h-[300px] w-[300px] sm:h-[450px] sm:w-[450px] md:h-[600px] md:w-[600px] rounded-full bg-brand-purple/5 blur-[120px]" />
+      <section className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-4 sm:px-6 text-center bg-grid">
+        {/* Ambient background particles */}
+        <div className="ambient-particles">
+          <div className="dot" style={{ top: "10%", left: "15%", animationDelay: "0s" }} />
+          <div className="dot" style={{ top: "25%", left: "75%", animationDelay: "2s" }} />
+          <div className="dot" style={{ top: "40%", left: "30%", animationDelay: "5s" }} />
+          <div className="dot" style={{ top: "55%", left: "85%", animationDelay: "1s" }} />
+          <div className="dot" style={{ top: "70%", left: "10%", animationDelay: "3s" }} />
+          <div className="dot" style={{ top: "80%", left: "60%", animationDelay: "7s" }} />
+          <div className="dot" style={{ top: "15%", left: "50%", animationDelay: "4s" }} />
+          <div className="dot" style={{ top: "90%", left: "40%", animationDelay: "6s" }} />
         </div>
-        <div className="absolute top-1/3 left-1/3 h-[200px] w-[200px] sm:h-[300px] sm:w-[300px] md:h-[400px] md:w-[400px] rounded-full bg-brand-cyan/3 blur-[100px]" />
-        <div className="absolute bottom-1/4 right-1/4 h-[150px] w-[150px] sm:h-[225px] sm:w-[225px] md:h-[300px] md:w-[300px] rounded-full bg-brand-orange/3 blur-[80px]" />
 
-        <div className="relative z-10">
-          <div className="mb-6 sm:mb-8 animate-float">
-            <img
-              src="/logo-icon.svg"
-              alt="启元智能 Logo"
-              className="mx-auto h-20 w-20 sm:h-24 sm:w-24 md:h-28 md:w-28 "
-            />
-          </div>
+        {/* Animated glow orbs */}
+        <div className="hero-glow hero-glow-cyan hero-glow-animated" style={{ top: "10%", left: "20%" }} />
+        <div className="hero-glow hero-glow-purple hero-glow-animated" style={{ top: "50%", right: "15%" }} />
+        <div className="hero-glow hero-glow-gold hero-glow-animated" style={{ bottom: "15%", left: "40%" }} />
 
-          <h1 className="mb-3 sm:mb-4 text-3xl font-black tracking-[8px] sm:text-4xl sm:tracking-[12px] md:text-5xl md:tracking-[16px] lg:text-7xl lg:tracking-[24px] brand-gradient-text">
-            启元智能
+        {/* Orbit ring decoration */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] orbit-ring" style={{ animationDuration: "40s" }} />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] orbit-ring" style={{ animationDuration: "25s", animationDirection: "reverse" }} />
+
+        <div className="relative z-10 max-w-4xl cinematic-enter">
+          <p className="mb-4 sm:mb-6 text-[10px] tracking-[4px] text-gray-600 sm:text-xs sm:tracking-[6px]">
+            AI-NATIVE ORGANIZATION
+          </p>
+          <h1 className="mb-4 sm:mb-6 text-3xl font-black tracking-[3px] sm:text-4xl sm:tracking-[6px] md:text-5xl md:tracking-[8px] lg:text-6xl">
+            <span className="brand-gradient-text">{t.homeHeroTitle}</span>
           </h1>
-
-          <p className="mb-2 sm:mb-3 text-xs tracking-[3px] text-gray-500 sm:text-sm sm:tracking-[6px] md:text-base">
-            QIYUAN INTELLIGENCE
+          <p className="mx-auto mb-8 sm:mb-10 max-w-md text-sm leading-relaxed tracking-[1px] text-gray-400 sm:text-base sm:tracking-[2px] md:max-w-2xl md:text-lg">
+            {t.brandName} · {t.brandSubtitle} — 让 AI 成为可管理、可进化、可传承的组织能力
           </p>
-
-          <div className="mx-auto mb-6 sm:mb-8 h-px w-12 sm:w-16 bg-gradient-to-r from-transparent via-brand-gold/40 to-transparent" />
-
-          <p className="mx-auto max-w-2xl text-sm leading-relaxed tracking-[1px] text-gray-400 sm:text-base sm:tracking-[3px] md:text-lg">
-            让 AI 成为<span className="text-brand-gold">可管理</span>、<span className="text-brand-cyan">可进化</span>、<span className="text-brand-orange">可传承</span>的组织能力
-          </p>
-
-          <p className="mt-2 sm:mt-3 text-[10px] tracking-[2px] text-gray-600 italic sm:text-xs sm:tracking-[4px]">
-            元点之门 · 万象
-          </p>
-
-          <div className="mt-10 sm:mt-12 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
-            <a
-              href="#about"
-              className="rounded-full bg-white/5 px-6 py-2.5 text-xs tracking-[2px] text-gray-300 backdrop-blur transition-all hover:bg-white/10 hover:text-brand-gold border border-white/10 sm:px-8 sm:py-3 sm:text-sm sm:tracking-[3px]"
-            >
-              了解我们
-            </a>
-            <a
-              href="#contact"
-              className="rounded-full bg-brand-gold/10 px-6 py-2.5 text-xs tracking-[2px] text-brand-gold backdrop-blur transition-all hover:bg-brand-gold/20 border border-brand-gold/20 sm:px-8 sm:py-3 sm:text-sm sm:tracking-[3px]"
-            >
-              联系我们
-            </a>
+          <div className="flex flex-wrap items-center justify-center gap-4">
+            <a href="/vision" className="btn-primary btn-glow text-sm tracking-[2px]">探索启元 →</a>
+            <a href="/projects" className="btn-ghost text-sm tracking-[2px]">{t.navProjects}</a>
           </div>
         </div>
 
-        <div className="absolute bottom-8 sm:bottom-10 flex flex-col items-center gap-2 animate-glow">
-          <span className="text-[10px] tracking-[4px] text-gray-600">向下探索</span>
-          <div className="h-6 sm:h-8 w-px bg-gradient-to-b from-brand-gold/60 to-transparent" />
+        {/* Scroll indicator */}
+        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10">
+          <div className="flex flex-col items-center gap-2">
+            <span className="text-[8px] tracking-[3px] text-gray-600">SCROLL</span>
+            <div className="w-[1px] h-8 bg-gradient-to-b from-gray-600 to-transparent animate-pulse" />
+          </div>
         </div>
       </section>
 

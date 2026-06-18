@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+<defs>
+  <radialGradient id="bgG" cx="50%" cy="48%" r="60%"><stop offset="0%" stop-color="#1a0a28" stop-opacity="0.7"/><stop offset="100%" stop-color="#0a0a0f" stop-opacity="0"/></radialGradient>
+  <linearGradient id="gL" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#00d4ff"/><stop offset="30%" stop-color="#6b5cff"/><stop offset="60%" stop-color="#ff6b35"/><stop offset="100%" stop-color="#ffd700"/></linearGradient>
+  <linearGradient id="gR" x1="1" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#00d4ff"/><stop offset="35%" stop-color="#ff8c00"/><stop offset="70%" stop-color="#ff6b35"/><stop offset="100%" stop-color="#ffd700"/></linearGradient>
+  <filter id="g2"><feGaussianBlur stdDeviation="2"/></filter>
+</defs>
+<rect width="400" height="400" fill="#0a0a0f" rx="8"/>
+<rect width="400" height="400" fill="url(#bgG)" rx="8"/>
+<!-- Main gateway paths - glow layer -->
+<path d="M 200,72 C 20,200 20,288 200,312" fill="none" stroke="url(#gL)" stroke-width="8" stroke-linecap="round" filter="url(#g2)" opacity="0.25"/>
+<path d="M 200,72 C 380,200 380,288 200,312" fill="none" stroke="url(#gR)" stroke-width="8" stroke-linecap="round" filter="url(#g2)" opacity="0.25"/>
+<!-- Main gateway paths - solid -->
+<path d="M 200,72 C 20,200 20,288 200,312" fill="none" stroke="url(#gL)" stroke-width="5" stroke-linecap="round" opacity="0.9"/>
+<path d="M 200,72 C 380,200 380,288 200,312" fill="none" stroke="url(#gR)" stroke-width="5" stroke-linecap="round" opacity="0.9"/>
+<path d="M 200,72 C 40,200 40,288 200,312" fill="none" stroke="#fff" stroke-width="1" stroke-linecap="round" opacity="0.15"/>
+<path d="M 200,72 C 360,200 360,288 200,312" fill="none" stroke="#fff" stroke-width="1" stroke-linecap="round" opacity="0.12"/>
+<!-- Gateway center point - solid, no blur glow -->
+<circle cx="200" cy="312" r="12" fill="#ff8c00" opacity="0.35"/>
+<circle cx="200" cy="312" r="5" fill="#fff" opacity="0.9"/>
+<circle cx="200" cy="312" r="2" fill="#fff"/>
+<!-- Star particles -->
+<circle cx="88" cy="160" r="2" fill="#ffd700" opacity="0.8" filter="url(#g2)"/>
+<circle cx="304" cy="140" r="1.5" fill="#00d4ff" opacity="0.7" filter="url(#g2)"/>
+<circle cx="48" cy="240" r="1.8" fill="#ff6b35" opacity="0.65" filter="url(#g2)"/>
+<circle cx="340" cy="248" r="1.2" fill="#8855ff" opacity="0.6" filter="url(#g2)"/>
+<circle cx="128" cy="120" r="2.2" fill="#ffd700" opacity="0.55" filter="url(#g2)"/>
+<circle cx="272" cy="220" r="1" fill="#00d4ff" opacity="0.5" filter="url(#g2)"/>
+</svg>

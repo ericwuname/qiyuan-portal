@@ -1,0 +1,794 @@
+﻿﻿﻿﻿﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title data-lang="en">Business Proposal · Rule Horror × Workplace Comedy</title>
+<title data-lang="zh">商业提案书 · 规则怪谈 × 职场喜剧</title>
+<style>
+
+:root{--bg-deep:#0a0c10;--bg-mid:#11141c;--bg-card:rgba(18,22,32,.65);--glass-border:rgba(255,255,255,.08);--glass-highlight:rgba(255,255,255,.04);--t1:#e8eaef;--t2:#8b90a0;--t3:#5a5f72;--cyan:#00d4aa;--cyan-dim:rgba(0,212,170,.12);--amber:#f0a040;--amber-dim:rgba(240,160,64,.1);--rose:#f06080;--rose-dim:rgba(240,96,128,.1);--blue:#60a0f0;--font:"PingFang SC","Microsoft YaHei","Noto Sans SC",sans-serif;--mono:"SF Mono","Cascadia Code","Consolas",monospace;--rs:6px;--rm:12px;--rl:20px;--rx:28px;--tf:.2s cubic-bezier(.4,0,.2,1);--ts:.4s cubic-bezier(.4,0,.2,1);--tl:.8s cubic-bezier(.25,.46,.45,.94)}
+*,:before,:after{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth;font-size:16px}body{font-family:var(--font);background:var(--bg-deep);color:var(--t1);line-height:1.7;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+.ambient-bg{position:fixed;inset:0;z-index:0;pointer-events:none}.ambient-bg .orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.15}
+.orb-1{width:600px;height:600px;background:var(--cyan);top:-200px;left:-150px}
+.orb-2{width:500px;height:500px;background:var(--amber);top:40%;right:-200px;opacity:.1}
+.orb-3{width:400px;height:400px;background:var(--rose);bottom:-100px;left:30%;opacity:.08}
+.noise{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.025;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.main-container{position:relative;z-index:2;max-width:1000px;margin:0 auto;padding:0 32px}
+.section-divider{height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.06),transparent);margin:0 32px}
+.side-nav{position:fixed;right:20px;top:50%;transform:translateY(-50%);z-index:100;display:flex;flex-direction:column;align-items:flex-end;gap:6px}
+.side-nav-toggle{width:38px;height:38px;border-radius:50%;background:var(--bg-card);border:1px solid var(--glass-border);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);color:var(--t2);cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:all var(--tf)}
+.side-nav-toggle:hover{color:var(--cyan);border-color:rgba(0,212,170,.3)}
+.side-nav-items{display:flex;flex-direction:column;gap:6px;max-height:0;overflow:hidden;opacity:0;transition:max-height .35s ease,opacity .25s ease,margin .25s ease}
+.side-nav.open .side-nav-items{max-height:500px;opacity:1;margin-top:8px}
+.side-nav-dot{width:10px;height:10px;border-radius:50%;background:var(--t3);border:none;cursor:pointer;transition:all var(--tf);position:relative;text-decoration:none;display:block}
+.side-nav-dot:hover,.side-nav-dot.active{background:var(--cyan);box-shadow:0 0 12px rgba(0,212,170,.5)}
+.side-nav-dot .tooltip{position:absolute;right:20px;top:50%;transform:translateY(-50%);background:var(--bg-mid);color:var(--t1);padding:4px 12px;border-radius:var(--rs);font-size:11px;white-space:nowrap;border:1px solid var(--glass-border);opacity:0;pointer-events:none;transition:opacity var(--tf)}
+.side-nav-dot:hover .tooltip{opacity:1}
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:80px 32px;position:relative}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;padding:6px 16px;border-radius:100px;font-size:13px;color:var(--cyan);background:var(--cyan-dim);border:1px solid rgba(0,212,170,.2);margin-bottom:32px;letter-spacing:.5px}
+.hero-badge .dot{width:7px;height:7px;border-radius:50%;background:var(--cyan);animation:pulse-dot 2s ease-in-out infinite}
+@keyframes pulse-dot{0%,100%{opacity:1;box-shadow:0 0 6px var(--cyan)}50%{opacity:.4;box-shadow:0 0 2px var(--cyan)}}
+.hero h1{font-size:clamp(2.4rem,5vw,4rem);font-weight:700;letter-spacing:-.02em;line-height:1.2;margin-bottom:16px;max-width:700px;background:linear-gradient(135deg,#e8eaef,#a0b4c8 40%,var(--cyan) 70%,var(--amber));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero h2{font-size:clamp(1rem,2vw,1.25rem);font-weight:400;color:var(--t2);margin-bottom:48px;letter-spacing:.08em;max-width:600px}
+.auto-play{display:flex;align-items:center;gap:12px;margin-bottom:60px;color:var(--t3);font-size:13px;letter-spacing:.06em}
+.auto-play-track{width:48px;height:2px;background:rgba(255,255,255,.06);border-radius:1px;position:relative;overflow:hidden}
+.auto-play-bar{position:absolute;top:0;left:0;height:100%;width:0%;background:linear-gradient(90deg,var(--cyan),var(--amber));border-radius:1px;transform-origin:left center;transition:width .15s linear}.auto-play-toggle{width:20px;height:20px;border-radius:50%;background:transparent;border:1px solid var(--t3);color:var(--t3);cursor:pointer;font-size:9px;display:inline-flex;align-items:center;justify-content:center;transition:all var(--tf);flex-shrink:0;padding:0;line-height:1}.auto-play-toggle:hover{color:var(--cyan);border-color:rgba(0,212,170,.4)}.auto-play-indicator{color:var(--cyan);font-size:11px;letter-spacing:.04em;min-width:90px}
+
+.hero-stats{display:flex;gap:48px;flex-wrap:wrap;justify-content:center}
+.hero-stat{text-align:center}.hero-stat-value{font-size:2.2rem;font-weight:700;font-family:var(--mono);letter-spacing:-.02em}.hero-stat-label{font-size:.8rem;color:var(--t3);letter-spacing:.06em;margin-top:4px}
+.glass-card{background:var(--bg-card);border:1px solid var(--glass-border);border-radius:var(--rl);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);padding:40px;position:relative;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.3),inset 0 1px 0 var(--glass-highlight);transition:border-color var(--ts),box-shadow var(--ts)}
+.glass-card:hover{border-color:rgba(255,255,255,.14)}.glass-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.06),transparent)}
+.section{padding:100px 0;position:relative}.section-header{margin-bottom:48px}.section-num{font-family:var(--mono);font-size:.75rem;color:var(--cyan);letter-spacing:.12em;margin-bottom:8px}.section-title{font-size:clamp(1.6rem,3vw,2.2rem);font-weight:700;letter-spacing:-.01em;line-height:1.3;margin-bottom:12px}.section-subtitle{color:var(--t2);font-size:.95rem;max-width:560px}
+.accent-bar{width:40px;height:3px;border-radius:2px;margin-bottom:24px;background:linear-gradient(90deg,var(--cyan),var(--amber))}
+.positioning-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px}@media(max-width:768px){.positioning-grid{grid-template-columns:1fr}}
+.tag-cloud{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}.tag{padding:6px 16px;border-radius:100px;font-size:.82rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);color:var(--t2);transition:all var(--tf)}.tag.highlight{background:var(--cyan-dim);border-color:rgba(0,212,170,.25);color:var(--cyan)}
+.quote-block{border-left:2px solid var(--cyan);padding:16px 24px;margin:24px 0;font-style:italic;color:var(--t2);background:rgba(0,212,170,.04)}
+.data-table{width:100%;border-collapse:collapse;margin:24px 0;font-size:.88rem}.data-table th{text-align:left;padding:12px 16px;color:var(--t3);font-weight:500;font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;border-bottom:1px solid rgba(255,255,255,.06)}.data-table td{padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.04);color:var(--t2)}.data-table tr:last-child td{border-bottom:none}.data-table .vh{color:var(--cyan);font-weight:600}.data-table .va{color:var(--amber);font-weight:600}.data-table .vr{color:var(--rose)}
+.timeline{position:relative;padding-left:28px}.timeline::before{content:'';position:absolute;left:11px;top:0;bottom:0;width:2px;background:linear-gradient(180deg,var(--cyan),rgba(255,255,255,.04))}.timeline-item{position:relative;margin-bottom:32px}.timeline-item::before{content:'';position:absolute;left:-21px;top:6px;width:10px;height:10px;border-radius:50%;border:2px solid var(--cyan);background:var(--bg-deep)}.timeline-item.gold::before{border-color:var(--amber);background:var(--amber-dim)}.timeline-item.rose::before{border-color:var(--rose)}.timeline-ep{font-family:var(--mono);font-size:.78rem;color:var(--cyan);letter-spacing:.06em;margin-bottom:4px}.timeline-item.gold .timeline-ep{color:var(--amber)}.timeline-item.rose .timeline-ep{color:var(--rose)}.timeline-title{font-weight:600;font-size:1.05rem;margin-bottom:4px}.timeline-hook{font-size:.85rem;color:var(--t2);line-height:1.5}.timeline-hook-type{display:inline-block;font-size:.7rem;padding:2px 8px;border-radius:4px;background:rgba(255,255,255,.04);color:var(--t3);margin-left:8px;letter-spacing:.04em}
+.rule-tiers{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin:32px 0}@media(max-width:768px){.rule-tiers{grid-template-columns:repeat(2,1fr)}}.rule-tier{background:var(--bg-card);border:1px solid var(--glass-border);border-radius:var(--rm);padding:20px 16px;text-align:center;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);transition:all var(--tf)}.rule-tier:hover{border-color:rgba(255,255,255,.18);transform:translateY(-2px)}.rule-tier-num{font-family:var(--mono);font-size:1.6rem;font-weight:700;margin-bottom:4px}.rule-tier:nth-child(1) .rule-tier-num{color:var(--blue)}.rule-tier:nth-child(2) .rule-tier-num{color:var(--cyan)}.rule-tier:nth-child(3) .rule-tier-num{color:var(--amber)}.rule-tier:nth-child(4) .rule-tier-num{color:var(--rose)}.rule-tier:nth-child(5) .rule-tier-num{color:#c084fc}.rule-tier-range{font-size:.72rem;color:var(--t3);letter-spacing:.04em}.rule-tier-name{font-size:.85rem;font-weight:600;margin:8px 0 4px}.rule-tier-desc{font-size:.72rem;color:var(--t3);line-height:1.4}
+.rule-examples{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}.rule-example{padding:8px 14px;border-radius:var(--rs);font-size:.8rem;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.05);color:var(--t2);font-family:var(--mono);letter-spacing:.02em;cursor:default;transition:all var(--tf)}.rule-example:hover{border-color:var(--cyan);color:var(--cyan);background:var(--cyan-dim)}
+.audience-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}@media(max-width:768px){.audience-grid{grid-template-columns:1fr}}.audience-card{background:var(--bg-card);border:1px solid var(--glass-border);border-radius:var(--rm);padding:28px;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);transition:all var(--tf)}.audience-card:hover{border-color:rgba(255,255,255,.14)}.audience-card .icon{font-size:1.6rem;margin-bottom:12px;display:block}.audience-card h4{font-size:1.1rem;font-weight:600;margin-bottom:8px}.audience-card p{font-size:.82rem;color:var(--t2);line-height:1.6}
+.production-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:32px}@media(max-width:768px){.production-grid{grid-template-columns:1fr}}.metric-row{display:flex;gap:32px;flex-wrap:wrap;margin:24px 0}.metric{text-align:center;min-width:100px}.metric-value{font-size:1.8rem;font-weight:700;font-family:var(--mono)}.metric-label{font-size:.75rem;color:var(--t3);letter-spacing:.06em;margin-top:4px}
+.asset-list{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:24px}@media(max-width:768px){.asset-list{grid-template-columns:1fr}}.asset-item{display:flex;align-items:flex-start;gap:14px;padding:16px;background:rgba(255,255,255,.02);border-radius:var(--rs);border:1px solid rgba(255,255,255,.04);transition:all var(--tf)}.asset-item:hover{border-color:rgba(255,255,255,.1);background:rgba(255,255,255,.03)}.asset-check{min-width:24px;height:24px;border-radius:50%;background:var(--cyan-dim);display:flex;align-items:center;justify-content:center;font-size:.7rem;color:var(--cyan);margin-top:2px}.asset-info h5{font-size:.95rem;font-weight:600;margin-bottom:2px}.asset-info span{font-size:.78rem;color:var(--t3)}
+.cta-section{text-align:center;padding:120px 0 80px}.cta-glass{display:inline-block;background:var(--bg-card);border:1px solid var(--glass-border);border-radius:var(--rx);padding:48px 64px;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);max-width:600px;box-shadow:0 16px 64px rgba(0,212,170,.08)}.cta-glass h2{font-size:1.8rem;font-weight:700;margin-bottom:12px;background:linear-gradient(135deg,var(--t1),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}.cta-glass p{color:var(--t2);margin-bottom:32px;font-size:.95rem}.cta-button{display:inline-flex;align-items:center;gap:10px;padding:14px 32px;border-radius:100px;font-size:1rem;font-weight:600;letter-spacing:.04em;background:linear-gradient(135deg,var(--cyan),#009a7a);color:#0a0c10;text-decoration:none;border:none;cursor:pointer;transition:all var(--tf);box-shadow:0 4px 24px rgba(0,212,170,.25)}.cta-button:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,212,170,.4)}
+.footer{text-align:center;padding:40px 0;color:var(--t3);font-size:.78rem;border-top:1px solid rgba(255,255,255,.04)}.footer-row{display:flex;gap:24px;justify-content:center;flex-wrap:wrap;margin-top:8px}
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .8s ease,transform .8s ease}.reveal.visible{opacity:1;transform:translateY(0)}
+.go-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 20px;border-radius:100px;font-size:1rem;font-weight:700;background:rgba(0,212,170,.12);border:1px solid rgba(0,212,170,.3);color:var(--cyan);letter-spacing:.04em;margin-bottom:16px}
+.spec-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:24px}@media(max-width:768px){.spec-grid{grid-template-columns:1fr}}.spec-card{background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.05);border-radius:var(--rm);padding:24px}.spec-card h4{font-size:.9rem;font-weight:600;margin-bottom:12px;color:var(--cyan)}.spec-card ul{list-style:none}.spec-card li{font-size:.82rem;color:var(--t2);padding:3px 0}.spec-card li::before{content:'►';color:var(--t3)}
+.aha-list{margin-top:20px}.aha-item{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid rgba(255,255,255,.04);align-items:flex-start}.aha-item:last-child{border-bottom:none}.aha-ep{font-family:var(--mono);font-size:.78rem;color:var(--cyan);min-width:36px;padding-top:2px}.aha-stars{color:var(--amber);font-size:.75rem;min-width:60px;padding-top:2px}.aha-text{font-size:.88rem;color:var(--t2);line-height:1.5}
+.comp-table th:first-child,.comp-table td:first-child{color:var(--t1);font-weight:600}
+
+
+/* ===== LANGUAGE SWITCHER (Steam Glass) ===== */
+.lang-switch{position:fixed;top:24px;right:24px;z-index:200;display:flex;gap:0;background:rgba(18,22,32,.75);border:1px solid var(--glass-border);border-radius:100px;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);padding:4px;box-shadow:0 8px 32px rgba(0,0,0,.4),inset 0 1px 0 var(--glass-highlight)}
+.lang-option{padding:8px 18px;border-radius:100px;font-size:.82rem;font-weight:500;letter-spacing:.04em;cursor:pointer;border:none;background:transparent;color:var(--t3);transition:all .3s cubic-bezier(.4,0,.2,1);font-family:var(--font);position:relative;z-index:1;white-space:nowrap}
+.lang-option.active{background:linear-gradient(135deg,rgba(0,212,170,.18),rgba(0,212,170,.06));color:var(--cyan);box-shadow:0 2px 12px rgba(0,212,170,.15),inset 0 1px 0 rgba(255,255,255,.08)}
+.lang-option:hover:not(.active){color:var(--t2);background:rgba(255,255,255,.04)}
+[data-lang]{transition:opacity .3s ease}
+.lang-en [data-lang="zh"],.lang-zh [data-lang="en"]{display:none!important}
+
+</style>
+</head>
+<body class="lang-en">
+<div class="ambient-bg"><div class="orb orb-1"></div><div class="orb orb-2"></div><div class="orb orb-3"></div></div>
+<div class="noise"></div>
+
+<!-- Language Switch -->
+<div class="lang-switch" id="langSwitch">
+  <button class="lang-option active" data-lang-val="en" id="langEn">EN</button>
+  <button class="lang-option" data-lang-val="zh" id="langZh">中文</button>
+</div>
+
+<nav class="side-nav" id="sideNav">
+  <button class="side-nav-toggle" id="navToggle" aria-label="Navigation">&#9776;</button>
+  <div class="side-nav-items">
+    <a href="#s1" class="side-nav-dot" data-section="1"><span class="tooltip" data-lang="en">Project Positioning</span><span class="tooltip" data-lang="zh">项目定位</span></a>
+    <a href="#s2" class="side-nav-dot" data-section="2"><span class="tooltip" data-lang="en">Market Position</span><span class="tooltip" data-lang="zh">市场卡位</span></a>
+    <a href="#s3" class="side-nav-dot" data-section="3"><span class="tooltip" data-lang="en">Hook Timeline</span><span class="tooltip" data-lang="zh">钩子时间线</span></a>
+    <a href="#s4" class="side-nav-dot" data-section="4"><span class="tooltip" data-lang="en">Rule Engine</span><span class="tooltip" data-lang="zh">规则引擎</span></a>
+    <a href="#s5" class="side-nav-dot" data-section="5"><span class="tooltip" data-lang="en">Audience</span><span class="tooltip" data-lang="zh">受众画像</span></a>
+    <a href="#s6" class="side-nav-dot" data-section="6"><span class="tooltip" data-lang="en">Production</span><span class="tooltip" data-lang="zh">制作方案</span></a>
+    <a href="#s7" class="side-nav-dot" data-section="7"><span class="tooltip" data-lang="en">Deliverables</span><span class="tooltip" data-lang="zh">资产包</span></a>
+    <a href="#s8" class="side-nav-dot" data-section="8"><span class="tooltip" data-lang="en">CTA</span><span class="tooltip" data-lang="zh">行动召唤</span></a>
+  </div>
+</nav>
+
+<div class="main-container">
+
+  <!-- ===== HERO ===== -->
+  <section class="hero" id="hero">
+    <div class="hero-badge"><span class="dot"></span> <span data-lang="en">Business Proposal · R004 Verified</span><span data-lang="zh">商业提案书 · R004已验证</span></div>
+    <h1 data-lang="en">Rule Horror × Workplace Comedy</h1><h1 data-lang="zh">规则怪谈 × 职场喜剧</h1>
+    <h2 data-lang="en">China First Genre-Fusion Short Drama · 30 Episodes · Tiancheng Tech Rule Universe</h2><h2 data-lang="zh">中国首部类型融合短剧 · 30集 · 天成科技规则宇宙</h2>
+    <div class="auto-play"><span data-lang="en">Proposal Ready</span><span data-lang="zh">提案就绪</span><button class="auto-play-toggle" id="autoPlayToggle" aria-label="Pause auto-play" title="Pause/Resume auto-play">▶</button><span class="auto-play-indicator" id="autoPlayIndicator">S1/8 · Project Positioning</span><div class="auto-play-track"><div class="auto-play-bar" id="autoPlayBar"></div></div><span data-lang="en">Auto-Play</span><span data-lang="zh">自动播放</span></div>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="hero-stat-value" style="color:var(--cyan)">8.03</div><div class="hero-stat-label" data-lang="en">R004 Business Validation</div><div class="hero-stat-label" data-lang="zh">R004 商业验证</div></div>
+      <div class="hero-stat"><div class="hero-stat-value" style="color:var(--amber)">8.2</div><div class="hero-stat-label" data-lang="en">Web Novel Master Score</div><div class="hero-stat-label" data-lang="zh">网文大师评分</div></div>
+      <div class="hero-stat"><div class="hero-stat-value">30</div><div class="hero-stat-label" data-lang="en">Complete Scripts</div><div class="hero-stat-label" data-lang="zh">完整剧本</div></div>
+      <div class="hero-stat"><div class="hero-stat-value" style="color:var(--rose)">12</div><div class="hero-stat-label" data-lang="en">AHA Moments</div><div class="hero-stat-label" data-lang="zh">AHA时刻</div></div>
+      <div class="hero-stat"><div class="hero-stat-value" style="color:var(--cyan)">60</div><div class="hero-stat-label" data-lang="en">Rules · 5 Tiers</div><div class="hero-stat-label" data-lang="zh">规则 · 5级体系</div></div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ===== S1: PROJECT POSITIONING ===== -->
+  <section class="section reveal" id="s1">
+    <div class="section-header">
+      <div class="section-num">01 · <span data-lang="en">PROJECT POSITIONING</span><span data-lang="zh">项目定位</span></div>
+      <div class="accent-bar"></div>
+      <div class="section-title" data-lang="en">China First "Rule Horror × Workplace Comedy" Short Drama</div>
+      <div class="section-title" data-lang="zh">中国首部「规则怪谈 × 职场喜剧」短剧</div>
+      <div class="section-subtitle" data-lang="en">Not a story about "defeating the rules" — it is about "teaching the rules what it means to be human"</div>
+      <div class="section-subtitle" data-lang="zh">不是关于「打败规则」的故事——而是关于「教会规则何为人类」</div>
+    </div>
+    <div class="positioning-grid">
+      <div class="glass-card">
+        <h4 style="color:var(--cyan);margin-bottom:16px;"><span data-lang="en">Target One-Liner</span><span data-lang="zh">一句话定位</span></h4>
+        <p style="font-size:1.15rem;font-weight:600;line-height:1.6;" data-lang="en">In a tech company ruled by a living rule system, four employees fight back with cold humor — using a "." empty document, 253 quota transfers, and one-brew tea — to teach the rules how to "leave blank."</p>
+        <p style="font-size:1.15rem;font-weight:600;line-height:1.6;" data-lang="zh">在一家被活体规则系统统治的科技公司，四名员工用冷幽默反击——凭借一个「.」空白文档、253次额度转移、一壶只冲一次的茶——教会规则「留白」。</p>
+        <div class="tag-cloud">
+          <span class="tag highlight" data-lang="en">Rule Horror</span><span class="tag highlight" data-lang="zh">规则怪谈</span>
+          <span class="tag highlight" data-lang="en">Workplace Comedy</span><span class="tag highlight" data-lang="zh">职场喜剧</span>
+          <span class="tag" data-lang="en">Cold Humor</span><span class="tag" data-lang="zh">冷幽默</span>
+          <span class="tag" data-lang="en">Wit Battle</span><span class="tag" data-lang="zh">智斗</span>
+          <span class="tag" data-lang="en">Genre Fusion</span><span class="tag" data-lang="zh">类型融合</span>
+          <span class="tag">30 Episodes / 30集</span>
+          <span class="tag" data-lang="en">Living Rule System</span><span class="tag" data-lang="zh">活体规则系统</span>
+        </div>
+      </div>
+      <div class="glass-card">
+        <h4 style="color:var(--amber);margin-bottom:16px;"><span data-lang="en">Why Now?</span><span data-lang="zh">为什么是现在？</span></h4>
+        <table class="data-table">
+          <tr><td data-lang="en">Short Drama Market</td><td data-lang="zh">短剧市场规模</td><td class="vh">65-80B CNY (2025E)</td></tr>
+          <tr><td data-lang="en">Rule Horror Genre</td><td data-lang="zh">规则怪谈品类</td><td data-lang="en">Bilibili >5B views · Zhihu >2M followers</td><td data-lang="zh">B站>50亿播放· 知乎 >200万关注</td></tr>
+          <tr><td data-lang="en">Workplace Sentiment</td><td data-lang="zh">职场情绪</td><td data-lang="en">"Lie Flat" "Anti-996" trending</td><td data-lang="zh">「躺平」「反996」趋势</td></tr>
+          <tr><td data-lang="en">Genre Fusion Window</td><td data-lang="zh">类型融合窗口</td><td class="vh" data-lang="en">Blue Ocean — No benchmark yet</td><td class="vh" data-lang="zh">蓝海 — 尚无对标产品</td></tr>
+        </table>
+        <div class="quote-block" style="margin-top:16px;" data-lang="en">The genre fusion window cannot be missed. Rule horror is moving from text/video narrative into short drama — the window closes in 12-18 months.</div>
+        <div class="quote-block" style="margin-top:16px;" data-lang="zh">类型融合窗口不可错过。规则怪谈正从文字/视频叙事进入短剧赛道——窗口期仅剩12-18个月。</div>
+      </div>
+    </div>
+    <div class="glass-card" style="margin-top:32px;">
+      <h4 style="color:var(--cyan);margin-bottom:16px;"><span data-lang="en">Core Contradiction</span><span data-lang="zh">核心矛盾</span></h4>
+      <p style="font-size:1.05rem;line-height:1.8;color:var(--t2);" data-lang="en"><strong style="color:var(--t1);">Rules are both oppressor and oppressed. Humans are both victims and feed for the rules.</strong><br>This is a parasitic relationship: rules grow from human behavior (#41 Rule Cultivation Period), humans survive through rule loopholes (#17 Quota Carryover). The true tension: neither side can kill the other — because killing the other means suicide.</p>
+      <p style="font-size:1.05rem;line-height:1.8;color:var(--t2);" data-lang="zh"><strong style="color:var(--t1);">规则既是压迫者，也是被压迫者。人类既是规则的受害者，也是规则的养料。</strong><br>这是寄生关系：规则从人类行为中生长（#41 规则培育期），人类通过规则漏洞求生——17 额度结转）。真正的张力在于：任何一方都无法杀死对方——因为杀死对方等于自杀。</p>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ===== S2: MARKET POSITION ===== -->
+  <section class="section reveal" id="s2">
+    <div class="section-header">
+      <div class="section-num">02 · <span data-lang="en">MARKET POSITION</span><span data-lang="zh">市场卡位</span></div>
+      <div class="accent-bar"></div>
+      <div class="section-title" data-lang="en">Market Position: Blue Ocean × Three Moats</div>
+      <div class="section-title" data-lang="zh">市场卡位：蓝海 × 三重护城河</div>
+      <div class="section-subtitle" data-lang="en">Reachable core audience 500K-1.5M · Safe cost structure · Strongest IP extensibility</div>
+      <div class="section-subtitle" data-lang="zh">可达核心受众50性150性· 安全成本结构 · 最强IP延展性</div>
+    </div>
+    <div class="glass-card" style="margin-bottom:32px;">
+      <h4 style="color:var(--cyan);margin-bottom:16px;"><span data-lang="en">Competitive Comparison</span><span data-lang="zh">竞品对比</span></h4>
+      <table class="data-table comp-table">
+        <thead><tr>
+          <th data-lang="en">Dimension</th><th data-lang="zh">维度</th>
+          <th data-lang="en">This Drama</th><th data-lang="zh">本剧</th>
+          <th data-lang="en">Chu-Han Rule Horror</th><th data-lang="zh">楚汉规则怪谈</th>
+          <th data-lang="en">CEO Romance (Benchmark)</th><th data-lang="zh">CEO甜宠（对标）</th>
+        </tr></thead>
+        <tbody>
+          <tr><td data-lang="en">Genre Innovation</td><td data-lang="zh">类型创新</td><td class="vh">5/5</td><td>4/5</td><td>2/5</td></tr>
+          <tr><td data-lang="en">Audience Size</td><td data-lang="zh">受众规模</td><td class="vh" data-lang="en">4/5 · 500K-1.5M</td><td class="vh" data-lang="zh">4/5 · 500万–1500万</td><td data-lang="en">3/5 · 100K-300K</td><td data-lang="zh">3/5 · 10集30集</td><td>5/5 · 50M+</td></tr>
+          <tr><td data-lang="en">Production Cost</td><td data-lang="zh">制作成本</td><td class="vh" data-lang="en">5/5 · Low</td><td class="vh" data-lang="zh">5/5 · 低</td><td data-lang="en">2/5 · High</td><td data-lang="zh">2/5 · 高</td><td>4/5 · Mid-Low</td></tr>
+          <tr><td data-lang="en">IP Extensibility</td><td data-lang="zh">IP延展性</td><td class="vh" data-lang="en">5/5 · Unlimited</td><td class="vh" data-lang="zh">5/5 · 无限</td><td>4/5 · Extensible</td><td>3/5</td></tr>
+          <tr><td data-lang="en">Differentiation Moat</td><td data-lang="zh">差异化护城河</td><td class="vh" data-lang="en">5/5 · High</td><td class="vh" data-lang="zh">5/5 · 低</td><td>4/5 · Mid-High</td><td>2/5 · Low</td></tr>
+          <tr><td data-lang="en">Commercial ROI</td><td data-lang="zh">商业ROI</td><td class="va">4/5 · 1.3x-3.3x</td><td>2/5 · 0.5x-1x</td><td>4/5 · Stable</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="glass-card">
+      <h4 style="color:var(--amber);margin-bottom:16px;"><span data-lang="en">Three Moats</span><span data-lang="zh">三重护城河</span></h4>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;">
+        <div>
+          <h5 style="color:var(--cyan);margin-bottom:8px;"><span data-lang="en">Rule Engine</span><span data-lang="zh">规则引擎</span></h5>
+          <p style="font-size:.85rem;color:var(--t2);" data-lang="en">60 rules across 5 tiers. Each rule is an extendable story seed. Not a prop — a character.</p>
+          <p style="font-size:.85rem;color:var(--t2);" data-lang="zh">60条规则 · 5级体系。每条规则都是一个可延展的故事种子。不是道具——是角色则</p>
+        </div>
+        <div>
+          <h5 style="color:var(--amber);margin-bottom:8px;"><span data-lang="en">Genre Fusion</span><span data-lang="zh">类型融合</span></h5>
+          <p style="font-size:.85rem;color:var(--t2);" data-lang="en">Rule horror "coldness" + workplace comedy "bite"  — two difficult genres stacked into a compound barrier.</p>
+          <p style="font-size:.85rem;color:var(--t2);" data-lang="zh">规则怪谈的「寒意」 职场喜剧的「刺」——两种高难度类型叠加形成复合壁垒。</p>
+        </div>
+        <div>
+          <h5 style="color:var(--rose);margin-bottom:8px;"><span data-lang="en">Cost Structure</span><span data-lang="zh">成本结构</span></h5>
+          <p style="font-size:.85rem;color:var(--t2);" data-lang="en">Office main set. 3-episode pilot: 3-5K USD. Full 30 episodes: ~35-68K USD. 30%-50% of comparable costume/sci-fi.</p>
+          <p style="font-size:.85rem;color:var(--t2);" data-lang="zh">办公室主场景 · 集试播：3-5K美元。全30集：~35-68K美元。仅为同体量古装/科幻的30%-50%。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ===== S3: HOOK TIMELINE ===== -->
+  <section class="section reveal" id="s3">
+    <div class="section-header">
+      <div class="section-num">03 · <span data-lang="en">HOOK TIMELINE</span><span data-lang="zh">钩子时间线</span></div>
+      <div class="accent-bar"></div>
+      <div class="section-title" data-lang="en">30-Episode Hook Timeline</div>
+      <div class="section-title" data-lang="zh">30集钩子时间线</div>
+      <div class="section-subtitle" data-lang="en">12 AHA moments evenly distributed · One world-building reversal every ~2.5 episodes</div>
+      <div class="section-subtitle" data-lang="zh">12个AHA时刻均匀分布 · 每约2.5集一个世界观反转</div>
+    </div>
+    <div class="glass-card">
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-ep" data-lang="en">E01 · DingTalk Is a Religion</div><div class="timeline-ep" data-lang="zh">E01 · 钉钉是一种宗教</div>
+          <div class="timeline-title" data-lang="en">Rules are alive — auto-grow from employee behavior</div><div class="timeline-title" data-lang="zh">规则是活的——从员工行为中自动生长</div>
+          <div class="timeline-hook" data-lang="en">"Rules grow themselves"  — Chen Mo triggers 48 rules on day one, discovers rules are not written by humans<span class="timeline-hook-type">World-Building</span></div>
+          <div class="timeline-hook" data-lang="zh">「规则会自己长」——陈默入职首日触了8条规则，发现规则并非人类编写<span class="timeline-hook-type" data-lang="en">World-Building</span><span class="timeline-hook-type" data-lang="zh">世界观</span></div>
+        </div>
+        <div class="timeline-item gold">
+          <div class="timeline-ep">E03 · <span data-lang="en">Loophole Seeker</span><span data-lang="zh">漏洞寻找者</span></div>
+          <div class="timeline-title" data-lang="en">"." empty document — a blind spot the rules cannot parse</div><div class="timeline-title" data-lang="zh">「.」空白文档——规则无法解析的盲区</div>
+          <div class="timeline-hook" data-lang="en">Chen Mo opens a 0KB file named "." 站the rule system cannot read it<span class="timeline-hook-type">Core Weapon</span></div>
+          <div class="timeline-hook" data-lang="zh">陈默打开一个名为「.」的0KB文件——规则系统无法读取它<span class="timeline-hook-type" data-lang="en">Core Weapon</span><span class="timeline-hook-type" data-lang="zh">核心武器</span></div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-ep">E06 · <span data-lang="en">Paradox</span><span data-lang="zh">悖论</span></div>
+          <div class="timeline-title" data-lang="en">#55 Paradox Arbitration — rules deliberately create contradictions</div><div class="timeline-title" data-lang="zh">#55 悖论仲裁——规则故意制造矛盾</div>
+          <div class="timeline-hook" data-lang="en">Su Jie 253 quota transfers trigger #54, but #17 allows carryover — system rules "take the stricter"<span class="timeline-hook-type">Rule Will Revealed</span></div>
+          <div class="timeline-hook" data-lang="zh">苏洁253次额度转移触发#54，但#17允许结转——系统规则「取更严者发#span class="timeline-hook-type" data-lang="en">Rule Will Revealed</span><span class="timeline-hook-type" data-lang="zh">规则意志显现</span></div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-ep" data-lang="en">E10 · Overtime Feeds Rules</div><div class="timeline-ep" data-lang="zh">E10 · 加班喂养规则</div>
+          <div class="timeline-title" data-lang="en">MT-0287 = Feed  — overtime grows rules</div><div class="timeline-title" data-lang="zh">MT-0287 = 喂养——加班让规则生长</div>
+          <div class="timeline-hook" data-lang="en">Chen Mo first overtime triggers 7 new rules in one night  — each bears his employee ID<span class="timeline-hook-type">Identity Reversal</span></div>
+          <div class="timeline-hook" data-lang="zh">陈默第一次加班一夜触发条新规则——每条都带有他的工号<span class="timeline-hook-type" data-lang="en">Identity Reversal</span><span class="timeline-hook-type" data-lang="zh">身份反转</span></div>
+        </div>
+        <div class="timeline-item gold">
+          <div class="timeline-ep" data-lang="en">E15 · Old Rules</div><div class="timeline-ep" data-lang="zh">E15 · 旧规则</div>
+          <div class="timeline-title" data-lang="en">Old Rule #12 — the system Achilles heel</div><div class="timeline-title" data-lang="zh">旧规则#12——系统的阿喀琉斯之踵</div>
+          <div class="timeline-hook" data-lang="en">Chen Mo discovers on 14F: "No rule may be automatically modified by the system" — the constitutional loophole<span class="timeline-hook-type">Deep World-Building</span></div>
+          <div class="timeline-hook" data-lang="zh">陈默在14楼发现：「任何规则不得由系统自动修改」——宪法级漏洞<span class="timeline-hook-type" data-lang="en">Deep World-Building</span><span class="timeline-hook-type" data-lang="zh">深层世界观</span></div>
+        </div>
+        <div class="timeline-item gold">
+          <div class="timeline-ep" data-lang="en">E20 · Empty Document</div><div class="timeline-ep" data-lang="zh">E20 · 空白文档</div>
+          <div class="timeline-title" data-lang="en">"." reverse-filled — the void was a trap</div><div class="timeline-title" data-lang="zh">「.」被反向填充——虚空是一个陷阱</div>
+          <div class="timeline-hook" data-lang="en">Chen Mo "." is filled with 47KB of strategic analysis — it knows you better than you do<span class="timeline-hook-type">Fear Climax</span></div>
+          <div class="timeline-hook" data-lang="zh">陈默的「.」被填满47KB的战略分析——它比你更懂站span class="timeline-hook-type" data-lang="en">Fear Climax</span><span class="timeline-hook-type" data-lang="zh">恐惧高潮</span></div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-ep" data-lang="en">E22 · Three People</div><div class="timeline-ep" data-lang="zh">E22 · 三个人</div>
+          <div class="timeline-title" data-lang="en">The rule entity blind spot  — cannot parse "warm"</div><div class="timeline-title" data-lang="zh">规则实体的盲区——无法解析「温暖则</div>
+          <div class="timeline-hook" data-lang="en">The rule system cannot understand the character " —  (warm) or "we won't scatter"  — humanity triumph<span class="timeline-hook-type">Humanity Victory</span></div>
+          <div class="timeline-hook" data-lang="zh">规则系统无法理解「暖」字或「我们不散」——人性的胜利<span class="timeline-hook-type" data-lang="en">Humanity Victory</span><span class="timeline-hook-type" data-lang="zh">人性胜利</span></div>
+        </div>
+        <div class="timeline-item gold">
+          <div class="timeline-ep" data-lang="en">E25 · One Brew</div><div class="timeline-ep" data-lang="zh">E25 · 一壶</div>
+          <div class="timeline-title" data-lang="en">Zhang brews one-brew tea publicly  — Rule #6 broken openly</div><div class="timeline-title" data-lang="zh">老张当众冲一壶茶——#6规则被公开打破</div>
+          <div class="timeline-hook" data-lang="en">The emotional core  — Zhang, in front of everyone, brews tea once. For Meng Xing. For everyone.<span class="timeline-hook-type">Emotional Climax</span></div>
+          <div class="timeline-hook" data-lang="zh">情感核心——老张，当众，冲一次茶。为梦醒。为所有人。</span class="timeline-hook-type" data-lang="en">Emotional Climax</span><span class="timeline-hook-type" data-lang="zh">情感高潮</span></div>
+        </div>
+        <div class="timeline-item rose">
+          <div class="timeline-ep" data-lang="en">E27 · Options</div><div class="timeline-ep" data-lang="zh">E27 · 选项</div>
+          <div class="timeline-title" data-lang="en">#60 about to emerge  — "Any unexplicitly permitted behavior = violation"</div><div class="timeline-title" data-lang="zh">#60即将诞生——「任何未明确允许的行则= 违规则</div>
+          <div class="timeline-hook" data-lang="en">Coverage approaching 100%. The trio faces the final choice  — "Pain proves I'm still here"<span class="timeline-hook-type">World Endgame</span></div>
+          <div class="timeline-hook" data-lang="zh">覆盖率逼近100%。三人面对最终选择——「疼痛证明我还在这里。</span class="timeline-hook-type" data-lang="en">World Endgame</span><span class="timeline-hook-type" data-lang="zh">世界观终局</span></div>
+        </div>
+        <div class="timeline-item gold">
+          <div class="timeline-ep" data-lang="en">E30 · Leave Blank</div><div class="timeline-ep" data-lang="zh">E30 · 留白</div>
+          <div class="timeline-title" data-lang="en">Rules learn to "leave blank" — the only displayed rule is "."</div><div class="timeline-title" data-lang="zh">规则学会「留白」——唯一显示的规则是「。」「。」</div>
+          <div class="timeline-hook" data-lang="en">Rules — have learned — to leave blank. Humans — may — return. Tomorrow — tearoom — see you.<span class="timeline-hook-type">Finale Closure</span></div>
+          <div class="timeline-hook" data-lang="zh">规则——学会了——留白。人类——可以——回来了。明天——茶水间——见。span class="timeline-hook-type" data-lang="en">Finale Closure</span><span class="timeline-hook-type" data-lang="zh">终局闭合</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+
+  <!-- ===== S4: RULE ENGINE ===== -->
+  <section class="section reveal" id="s4">
+    <div class="section-header">
+      <div class="section-num">04 · <span data-lang="en">RULE ENGINE</span><span data-lang="zh">规则引擎</span></div>
+      <div class="accent-bar"></div>
+      <div class="section-title" data-lang="en">Rule Engine: 60 Rules · 5-Tier System</div>
+      <div class="section-title" data-lang="zh">规则引擎系0条规系· 5级体系</div>
+      <div class="section-subtitle" data-lang="en">Each rule passes triple validation: Internal Coherence / Narrative Drive / Progressive Logic</div>
+      <div class="section-subtitle" data-lang="zh">每条规则通过三重验证：内部自治/ 叙事驱动 / 递进逻辑</div>
+    </div>
+    <div class="glass-card">
+      <div class="rule-tiers">
+        <div class="rule-tier">
+          <div class="rule-tier-num">#1-10</div>
+          <div class="rule-tier-range" data-lang="en">Foundation</div><div class="rule-tier-range" data-lang="zh">基础层</div>
+          <div class="rule-tier-name" data-lang="en">Onboarding</div><div class="rule-tier-name" data-lang="zh">入职规则</div>
+          <div class="rule-tier-desc" data-lang="en">Seemingly reasonable<br>Behavior-triggered</div>
+          <div class="rule-tier-desc" data-lang="zh">看似合理<br>行为触发</div>
+        </div>
+        <div class="rule-tier">
+          <div class="rule-tier-num">#11-25</div>
+          <div class="rule-tier-range" data-lang="en">Behavioral</div><div class="rule-tier-range" data-lang="zh">行为层</div>
+          <div class="rule-tier-name" data-lang="en">Daily Office</div><div class="rule-tier-name" data-lang="zh">日常办公</div>
+          <div class="rule-tier-desc" data-lang="en">Water time / clock-in window<br>Behavior-triggered</div>
+          <div class="rule-tier-desc" data-lang="zh">接水时间/打卡窗口<br>行为触发</div>
+        </div>
+        <div class="rule-tier">
+          <div class="rule-tier-num">#26-40</div>
+          <div class="rule-tier-range" data-lang="en">Extended</div><div class="rule-tier-range" data-lang="zh">扩展层</div>
+          <div class="rule-tier-name" data-lang="en">Gray Zone</div><div class="rule-tier-name" data-lang="zh">灰色地带</div>
+          <div class="rule-tier-desc" data-lang="en">Semi-autonomous growth<br>Behavior + Association</div>
+          <div class="rule-tier-desc" data-lang="zh">半自主生长<br>行为+关联</div>
+        </div>
+        <div class="rule-tier">
+          <div class="rule-tier-num">#41-55</div>
+          <div class="rule-tier-range" data-lang="en">Horror</div><div class="rule-tier-range" data-lang="zh">恐怖层</div>
+          <div class="rule-tier-name" data-lang="en">Surreal Layer</div><div class="rule-tier-name" data-lang="zh">超现实层</div>
+          <div class="rule-tier-desc" data-lang="en">Rules show "will"<br>Intent-prediction</div>
+          <div class="rule-tier-desc" data-lang="zh">规则展现「意志」<br>意图预判</div>
+        </div>
+        <div class="rule-tier">
+          <div class="rule-tier-num">#56-60</div>
+          <div class="rule-tier-range" data-lang="en">Meta-Rules</div><div class="rule-tier-range" data-lang="zh">元规则</div>
+          <div class="rule-tier-name" data-lang="en">Self-Evolution</div><div class="rule-tier-name" data-lang="zh">自我进化</div>
+          <div class="rule-tier-desc" data-lang="en">Rules governing rules<br>Autonomous growth</div>
+          <div class="rule-tier-desc" data-lang="zh">规则管规则<br>自主生长</div>
+        </div>
+      </div>
+      <h4 style="color:var(--amber);margin-top:32px;margin-bottom:12px;"><span data-lang="en">Signature Rules</span><span data-lang="zh">标志性规则</span></h4>
+      <div class="rule-examples">
+        <span class="rule-example" data-lang="en">#1 Onboarding = Acceptance — including rules not yet grown</span><span class="rule-example" data-lang="zh">#1 入职即接受——包括尚未生长的规则</span>
+        <span class="rule-example" data-lang="en">#14 Fixed Water-Drawing Hours</span><span class="rule-example" data-lang="zh">#14 固定接水时间</span>
+        <span class="rule-example" data-lang="en">#17 Quota Carryover — rewards hoarding, punishes hoarding</span><span class="rule-example" data-lang="zh">#17 额度结转——奖励囤积，又惩罚囤积</span>
+        <span class="rule-example">#41 Rule Cultivation Period / 规则培育期</span>
+        <span class="rule-example" data-lang="en">#47 First Leave-Seat After 9:00</span><span class="rule-example" data-lang="zh">#47 9点后首次离座</span>
+        <span class="rule-example" data-lang="en">#50 Silence Anomaly Detection</span><span class="rule-example" data-lang="zh">#50 静默异常检测</span>
+        <span class="rule-example" data-lang="en">#54 Anti-Monopoly — contradicting #17</span><span class="rule-example" data-lang="zh">#54 反垄断——与#17矛盾</span>
+        <span class="rule-example" data-lang="en">#55 Paradox Arbitration — "take the stricter"</span><span class="rule-example" data-lang="zh">#55 悖论仲裁——「取更严者」</span>
+        <span class="rule-example" data-lang="en">#59 Rule Self-Audit — system awakening</span><span class="rule-example" data-lang="zh">#59 规则自审——系统觉醒</span>
+        <span class="rule-example" data-lang="en">#60 100% Coverage — "nothing unpermitted"</span><span class="rule-example" data-lang="zh">#60 100%覆盖——「无可为之事」</span>
+      </div>
+      <div class="quote-block" style="margin-top:20px;" data-lang="en">Rules evolve: Control Behavior (#1-25) → Predict Intent (#26-40) → Actively Shape (#41-55) → Self-Evolve (#56-60). Contradictions are not resolved — the stricter takes precedence. This patch itself is a brilliant world-building premise.</div>
+      <div class="quote-block" style="margin-top:20px;" data-lang="zh">规则进化路径：控制行为（#1-25）→ 预判意图（26-40）→ 主动塑造（#41-55）→ 自我进化（56-60）。矛盾不解决——取更严者优先。这一补丁本身就是绝妙的世界观设定。</div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ===== S5: AUDIENCE ===== -->
+  <section class="section reveal" id="s5">
+    <div class="section-header">
+      <div class="section-num">05 · <span data-lang="en">AUDIENCE</span><span data-lang="zh">受众画像</span></div>
+      <div class="accent-bar"></div>
+      <div class="section-title" data-lang="en">Audience Profile</div>
+      <div class="section-title" data-lang="zh">受众画像</div>
+      <div class="section-subtitle" data-lang="en">Core / Expansion / Quality — three-tier user layers from "voice" to "identity"</div>
+      <div class="section-subtitle" data-lang="zh">核心 / 扩展 / 品质——从「发声」到「认同」的三层用户结构</div>
+    </div>
+    <div class="audience-grid">
+      <div class="audience-card">
+        <span class="icon" data-lang="en">Target</span><span class="icon" data-lang="zh">目标</span>
+        <h4 data-lang="en">Core · Office Workers</h4><h4 data-lang="zh">核心 · 职场人</h4>
+        <p data-lang="en">22-35 age · Tech/White-Collar<br>Female 55% / Male 45%<br>Face DingTalk check-ins, OKRs daily<br>——Tiancheng Tech is their <strong>mirror projection</strong><br>Platform: Douyin (primary) + Bilibili</p>
+        <p data-lang="zh">22-35岁· 科技/白领<br>女岁5% / 男岁5%<br>每天面对钉钉打卡、OKR<br>——天成科技是他们的<strong>镜像投射</strong><br>平台：抖音（主）+ B站</p>
+      </div>
+      <div class="audience-card">
+        <span class="icon" data-lang="en">Expand</span><span class="icon" data-lang="zh">扩展</span>
+        <h4 data-lang="en">Expansion · Content Consumers</h4><h4 data-lang="zh">扩展 · 内容消费者</h4>
+        <p data-lang="en">18-22 College / 35-45 Senior Workers<br>Rule horror enthusiasts (Bilibili/Zhihu)<br>Wit-battle fiction readers<br>Drawn by "cold humor + wit battle"<br>Platform: Xiaohongshu + Zhihu</p>
+        <p data-lang="zh">18-22大学生/ 35-45资深职场人<br>规则怪谈爱好者（B站/知乎<br>智斗小说读者</br>被「冷幽默+智斗」吸引</br>平台：小红书 + 知乎</p>
+      </div>
+      <div class="audience-card">
+        <span class="icon" data-lang="en">Diamond</span><span class="icon" data-lang="zh">钻石</span>
+        <h4 data-lang="en">Quality · Word-of-Mouth</h4><h4 data-lang="zh">品质 · 口碑传播者</h4>
+        <p data-lang="en">Critics / Media Editors / KOLs<br>Follow genre innovation + narrative experiments<br>Drawn by "rule engine" "AHA density"<br>Produce "rule breakdown" "workplace meme analysis"<br>Secondary content feeds main series</p>
+        <p data-lang="zh">评论人/ 媒体编辑 / KOL<br>关注类型创新+叙事实验<br>被「规则引擎」「AHA密度」吸列<br>产出「规则拆解」「职场梗分析列<br>二次内容反哺主系列</p>
+      </div>
+    </div>
+    <div class="glass-card" style="margin-top:32px;">
+      <h4 style="color:var(--cyan);margin-bottom:12px;"><span data-lang="en">Platform Strategy</span><span data-lang="zh">平台策略</span></h4>
+      <table class="data-table">
+        <thead><tr>
+          <th data-lang="en">Platform</th><th data-lang="zh">平台</th>
+          <th data-lang="en">Fit</th><th data-lang="zh">匹配度</th>
+          <th data-lang="en">Est. Views/Ep</th><th data-lang="zh">预估播放/集</th>
+          <th data-lang="en">Strategy</th><th data-lang="zh">策略</th>
+        </tr></thead>
+        <tbody>
+          <tr><td>Douyin / 抖音</td><td class="vh">5/5</td><td>3M-8M</td><td data-lang="en">Main battleground · DOU+ cold start · workplace topic pool</td><td data-lang="zh">主战场· DOU+冷启动· 职场话题池</td></tr>
+          <tr><td>Bilibili / B站</td><td class="vh">4/5</td><td>500K-1.5M</td><td data-lang="en">Secondary creation · "rule breakdown" feeds main</td><td data-lang="zh">二次创作 · 「规则拆解」反哺正片</td></tr>
+          <tr><td>Xiaohongshu / 小红书</td><td>3/5</td><td data-lang="en">Notes 500K-2M</td><td data-lang="zh">笔记50万–200万–/td><td data-lang="en">"Workplace mouthpiece" clips · female perspective</td><td data-lang="zh">「职场嘴替」片角· 女性视角</td></tr>
+          <tr><td>Kuaishou / 快手</td><td>3/5</td><td>1M-3M</td><td data-lang="en">Supplementary · broader market</td><td data-lang="zh">补充渠道 · 下沉市场</td></tr>
+          <tr><td>Zhihu / 知乎</td><td>3/5</td><td data-lang="en">Topic discussion</td><td data-lang="zh">话题讨论</td><td data-lang="en">Word-of-mouth · "rule horror" topic active</td><td data-lang="zh">口碑发酵 · 「规则怪谈」话题活池</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ===== S6: PRODUCTION ===== -->
+  <section class="section reveal" id="s6">
+    <div class="section-header">
+      <div class="section-num">06 · <span data-lang="en">PRODUCTION</span><span data-lang="zh">制作方案</span></div>
+      <div class="accent-bar"></div>
+      <div class="section-title" data-lang="en">Production Plan</div>
+      <div class="section-title" data-lang="zh">制作方案</div>
+      <div class="section-subtitle" data-lang="en">Office main set · Low cost · High content density</div>
+      <div class="section-subtitle" data-lang="zh">办公室主场景 · 低成本· 高内容密本</div>
+    </div>
+    <div class="production-grid">
+      <div class="glass-card">
+        <h4 style="color:var(--cyan);margin-bottom:16px;"><span data-lang="en">Production Specs</span><span data-lang="zh">制作规格</span></h4>
+        <table class="data-table">
+          <tr><td data-lang="en">Episodes × Duration</td><td data-lang="zh">集数×时长</td><td>30 × ~120-150s each / 每集0万20-1500万</td></tr>
+          <tr><td data-lang="en">Total Runtime</td><td data-lang="zh">总时长</td><td>~60-75 min / 60-75分钟</td></tr>
+          <tr><td data-lang="en">Main Sets</td><td data-lang="zh">主场景</td><td data-lang="en">Open office + Tearoom + 14F (warehouse)</td><td data-lang="zh">开放式办公区+ 茶水间+ 14楼（仓库区</td></tr>
+          <tr><td data-lang="en">Format</td><td data-lang="zh">画幅</td><td>Vertical 9:16 · 4K / 竖屏9:16 · 4K</td></tr>
+          <tr><td data-lang="en">Color Grade</td><td data-lang="zh">调色</td><td data-lang="en">Cold gray base · -15% saturation · 5000-6500K</td><td data-lang="zh">冷灰基调 · -15%饱和度· 5000-6500K</td></tr>
+          <tr><td data-lang="en">Lighting</td><td data-lang="zh">灯光</td><td data-lang="en">Fluorescent cold white + tearoom warm amber · Screen blue-white bounce</td><td data-lang="zh">荧光冷白 + 茶水间暖琥珀 · 屏幕蓝白反射</td></tr>
+          <tr><td data-lang="en">Sound System</td><td data-lang="zh">音效体系</td><td data-lang="en">Rule trigger SFX v1-v3 + DingTalk alerts + ambient layers</td><td data-lang="zh">规则触发音效v1-v3 + 钉钉提示音+ 环境音</td></tr>
+        </table>
+      </div>
+      <div class="glass-card">
+        <h4 style="color:var(--amber);margin-bottom:16px;"><span data-lang="en">Cost & Revenue Estimate</span><span data-lang="zh">成本与收入预估</span></h4>
+        <div class="metric-row">
+          <div class="metric"><div class="metric-value" style="color:var(--cyan);">$3-5K</div><div class="metric-label" data-lang="en">Pilot (E01-E03)</div><div class="metric-label" data-lang="zh">试播集（E01-E03）</div></div>
+          <div class="metric"><div class="metric-value" style="color:var(--amber);">$35-68K</div><div class="metric-label" data-lang="en">Full 30 Episodes</div><div class="metric-label" data-lang="zh">×30×3/div></div>
+          <div class="metric"><div class="metric-value">1.3x-3.3x</div><div class="metric-label" data-lang="en">Target ROI (Baseline)</div><div class="metric-label" data-lang="zh">目标ROI（基线）</div></div>
+        </div>
+        <div style="margin-top:20px;">
+          <h5 style="color:var(--t2);margin-bottom:8px;"><span data-lang="en">Revenue Mix Estimate</span><span data-lang="zh">收入结构预估</span></h5>
+          <table class="data-table">
+            <tr><td data-lang="en">Platform Revenue Share</td><td data-lang="zh">平台分成</td><td>40-60%</td></tr>
+            <tr><td data-lang="en">Brand Integration</td><td data-lang="zh">品牌植入</td><td>10-20% (not dependent / 非依赖项)</td></tr>
+            <tr><td data-lang="en">IP Derivatives</td><td data-lang="zh">IP衍生</td><td class="vh" data-lang="en">20-40% (long-term core)</td><td class="vh" data-lang="zh">20-40%（长期核心）</td></tr>
+          </table>
+        </div>
+        <div class="quote-block" style="margin-top:16px;" data-lang="en">The commercial center of gravity is not platform revenue share — it is the IP-ization of the Rule Engine: books/games/Season 2/prequel. This is "IP farming" logic, not "selling short drama" logic.</div>
+        <div class="quote-block" style="margin-top:16px;" data-lang="zh">商业重心不在平台分成——而在于规则引擎的IP化：书籍/游戏/第二则前传。这是「IP养成」逻辑，不是「卖短剧」逻辑。</div>
+      </div>
+    </div>
+    <div class="glass-card" style="margin-top:32px;">
+      <h4 style="color:var(--rose);margin-bottom:16px;"><span data-lang="en">Risks & Mitigation</span><span data-lang="zh">风险与缓解</span></h4>
+      <table class="data-table">
+        <thead><tr>
+          <th data-lang="en">Risk</th><th data-lang="zh">风险</th>
+          <th data-lang="en">Prob.</th><th data-lang="zh">概率</th>
+          <th data-lang="en">Impact</th><th data-lang="zh">影响</th>
+          <th data-lang="en">Mitigation</th><th data-lang="zh">缓解措施</th>
+        </tr></thead>
+        <tbody>
+          <tr>
+            <td data-lang="en">"Cold humor" not accepted by short drama audience</td><td data-lang="zh">「冷幽默」不被短剧受众接受</td>
+            <td>Med / 中</td><td>High / 高</td>
+            <td data-lang="en">Pilot A/B test: prepare "warmed" version</td><td data-lang="zh">试播A/B测试：准备「加温版」</td>
+          </tr>
+          <tr>
+            <td data-lang="en">Rule horror heaviness exceeds comedy offset</td><td data-lang="zh">规则怪谈沉重感超出喜剧抵抗</td>
+            <td>Med / 中</td><td>Med / 中</td>
+            <td data-lang="en">E01-E03 already 4+ cold humor/eps  — density ok</td><td data-lang="zh">E01-E03试播+冷幽默/集密度足够</td>
+          </tr>
+          <tr>
+            <td data-lang="en">Platform algorithm no traffic</td><td data-lang="zh">平台算法不给量</td>
+            <td>Med / 中</td><td>High / 高</td>
+            <td data-lang="en">DOU+ cold start + Bilibili/Zhihu/XHS secondary creation</td><td data-lang="zh">DOU+冷启动+ B站/知乎/小红书二次创作</td>
+          </tr>
+          <tr>
+            <td data-lang="en">No brand integration deals</td><td data-lang="zh">无品牌植入合作</td>
+            <td>High / 低</td><td>Low / 低</td>
+            <td data-lang="en">Not dependent on brand  — pure content driven</td><td data-lang="zh">非依赖品牌——纯内容驱动</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ===== S7: DELIVERABLES ===== -->
+  <section class="section reveal" id="s7">
+    <div class="section-header">
+      <div class="section-num">07 · <span data-lang="en">DELIVERABLES</span><span data-lang="zh">资产包</span></div>
+      <div class="accent-bar"></div>
+      <div class="section-title" data-lang="en">Asset Package Deliverables</div>
+      <div class="section-title" data-lang="zh">资产包交付清单</div>
+      <div class="section-subtitle" data-lang="en">Complete scripts + shooting scripts + rule engine + business proposal  — ready to shoot</div>
+      <div class="section-subtitle" data-lang="zh">完整剧本 + 分镜脚本 + 规则引擎 + 商业提案——开拍就行</div>
+    </div>
+    <div class="glass-card">
+      <div class="asset-list">
+        <div class="asset-item"><div class="asset-check">OK</div><div class="asset-info"><h5 data-lang="en">30 Complete Scripts (Pilot Collection)</h5><h5 data-lang="zh">30集完整剧本（试播合集）</h5><span data-lang="en">E01-E30 full scripts · ~1200-2500 words each · with scene/dialogue/action</span><span data-lang="zh">E01-E30全剧万–· 每集万–200-2500万–· 含场万–对话/动作</span></div></div>
+        <div class="asset-item"><div class="asset-check">OK</div><div class="asset-info"><h5 data-lang="en">30 Shooting Scripts</h5><h5 data-lang="zh">30集分镜脚本</h5><span data-lang="en">Shot-by-shot storyboard · lighting plan · sound plan · E01 53 shots / E30 35 shots</span><span data-lang="zh">逐镜故事板· 灯光方案 · 音效方案 · E01 53板/ E30 35板</span></div></div>
+        <div class="asset-item"><div class="asset-check">OK</div><div class="asset-info"><h5 data-lang="en">Rule Engine (60 Rules)</h5><h5 data-lang="zh">规则引擎：60条规则）</h5><span data-lang="en">5-tier system · triple validation each · contradiction pairs · narrative allocation</span><span data-lang="zh">5级体系· 每条三重验证 · 矛盾配对 · 叙事分配</span></div></div>
+        <div class="asset-item"><div class="asset-check">OK</div><div class="asset-info"><h5 data-lang="en">World-Building Doc · Tiancheng Tech</h5><h5 data-lang="zh">世界观文档· 天成科技</h5><span data-lang="en">Company history · Reset event · Rule growth timeline · physical space design</span><span data-lang="zh">公司历史 · 重置事件 · 规则生长时间线· 物理空间设计</span></div></div>
+        <div class="asset-item"><div class="asset-check">OK</div><div class="asset-info"><h5 data-lang="en">Character Arc Tracking Table</h5><h5 data-lang="zh">角色弧线追踪表</h5><span data-lang="en">Chen Mo / Su Jie / Zhang / Newbie · 4-person interlock matrix · arc node verification</span><span data-lang="zh">陈默 / 苏洁 / 老张 / 新人 · 四人互锁矩阵 · 弧线节点验证</span></div></div>
+        <div class="asset-item"><div class="asset-check">OK</div><div class="asset-info"><h5 data-lang="en">Quality Review Package</h5><h5 data-lang="zh">质量评审包</h5><span data-lang="en">Web Novel Master Review (8.2/10) · Brainstorm Assessment (12 AHA) · QA Final (P0 cleared)</span><span data-lang="zh">网文大师评审（8.2/10）（8头脑风暴评估（82 AHA）（8QA终审（P0清零（8/span></div></div>
+        <div class="asset-item"><div class="asset-check">OK</div><div class="asset-info"><h5 data-lang="en">R004 Business Validation Report</h5><h5 data-lang="zh">R004商业验证报告</h5><span data-lang="en">GO verdict · Composite 8.03/10 · 5-dimension scoring</span><span data-lang="zh">GO结论 · 综合8.03/10 · 五维评分</span></div></div>
+        <div class="asset-item"><div class="asset-check">OK</div><div class="asset-info"><h5 data-lang="en">Business Proposal (This Document)</h5><h5 data-lang="zh">商业提案书（本文档）</h5><span data-lang="en">Investor/platform/partner-facing · Steam glass aesthetic</span><span data-lang="zh">面向投资人/平台/合作人/· Steam玻璃质感</span></div></div>
+      </div>
+    </div>
+    <div class="glass-card" style="margin-top:32px;">
+      <h4 style="color:var(--amber);margin-bottom:12px;"><span data-lang="en">Top 5 Strengths (Web Novel Master Certified)</span><span data-lang="zh">五大优势（网文大师认证）</span></h4>
+      <ol style="color:var(--t2);padding-left:20px;line-height:2;">
+        <li data-lang="en"><strong style="color:var(--t1);">Su Jie Arc</strong> — From "rule most perfect product" to "godmother", 253-quota closed loop — flawless</li>
+        <li data-lang="zh"><strong style="color:var(--t1);">苏洁弧线</strong>——从「规则最完美产品」到「教母」，253额度闭环——无懈可击</li>
+        <li data-lang="en"><strong style="color:var(--t1);">Meng Xing Undercurrent</strong> — Absent yet everywhere. "One brew. Enough." — the soul of the entire drama</li>
+        <li data-lang="zh"><strong style="color:var(--t1);">梦醒暗线</strong>——人不在却无处不在。「一壶。够了。」——全剧之魂</li>
+        <li data-lang="en"><strong style="color:var(--t1);">Rule System as Character</strong> → Tool → Hungry Beast → Self-Aware → Learns to Leave Blank → traceable evolution arc</li>
+        <li data-lang="zh"><strong style="color:var(--t1);">规则系统即角色</strong>——工具 → 饥饿的野兽 → 自我意识 → 学会留白——可追溯的进化弧线</li>
+        <li data-lang="en"><strong style="color:var(--t1);">"." Object Chain</strong> — Empty doc — old rule interface → reverse-filled → voting channel → finale sole rule → textbook object usage</li>
+        <li data-lang="zh"><strong style="color:var(--t1);">「.」物件链</strong>——空文档 「.旧规则界用用反向填充 用投票通道 用终局唯一规则——教科书级物件运用</li>
+        <li data-lang="en"><strong style="color:var(--t1);">E30 Leave Blank</strong> — "Rules — have learned — to leave blank. Humans — may — return." Rare complete-closure finale in Chinese short drama</li>
+        <li data-lang="zh"><strong style="color:var(--t1);">E30留白</strong>——「规则——学会了——留白。人类——可以——回来了。」国产短剧罕见的完整闭合结局</li>
+      </ol>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ===== S8: CTA ===== -->
+  <section class="section reveal cta-section" id="s8">
+    <div class="go-badge"><span data-lang="en">GO · Enter Minimum Validation Phase</span><span data-lang="zh">GO · 进入最小验证阶段</span></div>
+    <div class="cta-glass">
+      <h2 data-lang="en">One Phone Call Away</h2><h2 data-lang="zh">只差一通电话</h2>
+      <p data-lang="en">30 scripts completed.<br>Shooting scripts ready.<br>Rule engine standing by.<br>Ideation, testing, polishing — all done.<br><br>Now only missing: one director/producer/platform who believes in this story.</p>
+      <p data-lang="zh">30集剧本已完成。<br>分镜脚本已就绪。<br>规则引擎待命中。<br>创意、测试、打磨——全部完成。<br><br>现在只缺：一个相信这个故事的导演/制片/平台。</p>
+      <a href="#hero" class="cta-button"><span data-lang="en">Back to Top · Review Again</span><span data-lang="zh">返回顶部 · 再次审阅</span></a>
+      <div style="margin-top:32px;font-size:.82rem;color:var(--t3);">
+        <span data-lang="en">Qiyuan Intelligence · Design Director Team<br>Business Proposal V1.0 · 2026-06-15<br></span>
+        <span data-lang="zh">启元智能 · 设计总监团队<br>商业提案书 V1.0 · 2026-06-15<br></span>
+        <span style="color:var(--cyan);" data-lang="en">Rule Horror × Workplace Comedy · China First Genre-Fusion Short Drama</span>
+        <span style="color:var(--cyan);" data-lang="zh">规则怪谈 × 职场喜剧 · 中国首部类型融合短剧</span>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <p><span data-lang="en">2026 Qiyuan Intelligence · Business Proposal V1.0</span><span data-lang="zh">2026 启元智能 · 商业提案书 V1.0</span></p>
+    <div class="footer-row"><span>R004: GO · 8.03/10</span><span>Web Novel Master: 8.2/10</span><span data-lang="en">QA: Conditional Pass — P0 Cleared</span><span data-lang="zh">QA：有条件通过 — P0清零</span><span>Brainstorm: 12 AHA · 8.5 Composite</span></div>
+  </footer>
+
+</div>
+
+<script>
+// ===== LANGUAGE SWITCH =====
+(function(){
+  const LANG_KEY = 'qiyuan_proposal_lang';
+  const body = document.body;
+  const btnEn = document.getElementById('langEn');
+  const btnZh = document.getElementById('langZh');
+
+  function setLang(lang) {
+    body.classList.remove('lang-en', 'lang-zh');
+    body.classList.add('lang-' + lang);
+    btnEn.classList.toggle('active', lang === 'en');
+    btnZh.classList.toggle('active', lang === 'zh');
+    document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+    
+    // Update title
+    const titles = document.querySelectorAll('title[data-lang]');
+    titles.forEach(t => {
+      t.style.display = t.getAttribute('data-lang') === lang ? '' : 'none';
+    });
+    
+    localStorage.setItem(LANG_KEY, lang);
+  }
+
+  // Restore preference or default to English
+  const saved = localStorage.getItem(LANG_KEY);
+  if (saved === 'zh' || saved === 'en') {
+    setLang(saved);
+  }
+
+  btnEn.addEventListener('click', () => setLang('en'));
+  btnZh.addEventListener('click', () => setLang('zh'));
+})();
+
+// ===== SIDE NAV =====
+const sideNav = document.getElementById('sideNav');
+const navToggle = document.getElementById('navToggle');
+const navDots = document.querySelectorAll('.side-nav-dot');
+
+navToggle.addEventListener('click', () => { sideNav.classList.toggle('open'); });
+
+const sections = document.querySelectorAll('section[id]');
+const observerOptions = { rootMargin: '-20% 0px -60% 0px' };
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navDots.forEach(dot => { dot.classList.toggle('active', dot.getAttribute('href') === '#' + entry.target.id); });
+    }
+  });
+}, observerOptions);
+sections.forEach(section => observer.observe(section));
+
+const revealElements = document.querySelectorAll('.reveal');
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+}, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+revealElements.forEach(el => revealObserver.observe(el));
+
+navDots.forEach(dot => { dot.addEventListener('click', () => { setTimeout(() => sideNav.classList.remove('open'), 300); }); });
+
+// ===== AUTO-PLAY CONTROLLER =====
+(function(){
+  var sections = document.querySelectorAll('section[id]');
+  var totalSections = sections.length;
+  var SECTION_DURATION = 9000;
+  var INITIAL_DELAY = 3000;
+  var RESUME_DELAY = 5000;
+  var PROGRESS_STEP = 50;
+
+  var autoPlayBar = document.getElementById('autoPlayBar');
+  var autoPlayToggle = document.getElementById('autoPlayToggle');
+  var autoPlayIndicator = document.getElementById('autoPlayIndicator');
+
+  var sectionNames = [
+    'Project Positioning',
+    'Market Position',
+    'Hook Timeline',
+    'Rule Engine',
+    'Audience',
+    'Production',
+    'Deliverables',
+    'CTA'
+  ];
+
+  var currentIndex = 0;
+  var isPlaying = false;
+  var progressRAF = null;
+  var progressStart = 0;
+  var userInteractionTimer = null;
+  var isAutoScrolling = false;
+
+  function scrollToSection(index) {
+    if (index >= totalSections) index = 0;
+    if (index < 0) index = totalSections - 1;
+    currentIndex = index;
+    isAutoScrolling = true;
+    sections[index].scrollIntoView({ behavior: 'smooth' });
+    setTimeout(function() { isAutoScrolling = false; }, 1200);
+    updateIndicator();
+  }
+
+  function updateIndicator() {
+    var name = sectionNames[currentIndex] || ('S' + (currentIndex + 1));
+    autoPlayIndicator.textContent = 'S' + (currentIndex + 1) + '/' + totalSections + ' \u00b7 ' + name;
+  }
+
+  function animateProgress() {
+    var elapsed = Date.now() - progressStart;
+    var progress = Math.min(elapsed / SECTION_DURATION, 1);
+    autoPlayBar.style.width = (progress * 100) + '%';
+
+    if (progress < 1 && isPlaying) {
+      progressRAF = requestAnimationFrame(animateProgress);
+    } else if (progress >= 1 && isPlaying) {
+      autoPlayBar.style.width = '0%';
+      var next = (currentIndex + 1) % totalSections;
+      scrollToSection(next);
+      progressStart = Date.now();
+      progressRAF = requestAnimationFrame(animateProgress);
+    }
+  }
+
+  function startProgress() {
+    progressStart = Date.now();
+    autoPlayBar.style.width = '0%';
+    if (progressRAF) cancelAnimationFrame(progressRAF);
+    progressRAF = requestAnimationFrame(animateProgress);
+  }
+
+  function startAutoPlay() {
+    if (isPlaying) return;
+    isPlaying = true;
+    autoPlayToggle.innerHTML = '\u23f8';
+    autoPlayToggle.title = 'Pause auto-play';
+    autoPlayToggle.setAttribute('aria-label', 'Pause auto-play');
+    updateIndicator();
+    startProgress();
+  }
+
+  function stopAutoPlay() {
+    if (!isPlaying) return;
+    isPlaying = false;
+    autoPlayToggle.innerHTML = '\u25b6';
+    autoPlayToggle.title = 'Resume auto-play';
+    autoPlayToggle.setAttribute('aria-label', 'Resume auto-play');
+    if (progressRAF) {
+      cancelAnimationFrame(progressRAF);
+      progressRAF = null;
+    }
+    if (userInteractionTimer) {
+      clearTimeout(userInteractionTimer);
+      userInteractionTimer = null;
+    }
+  }
+
+  function toggleAutoPlay() {
+    if (isPlaying) {
+      stopAutoPlay();
+    } else {
+      updateCurrentIndexFromScroll();
+      startAutoPlay();
+    }
+  }
+
+  function updateCurrentIndexFromScroll() {
+    var scrollTop = window.scrollY + window.innerHeight / 2;
+    for (var i = 0; i < totalSections; i++) {
+      var s = sections[i];
+      if (s.offsetTop <= scrollTop && s.offsetTop + s.offsetHeight > scrollTop) {
+        currentIndex = i;
+        break;
+      }
+    }
+  }
+
+  function pauseForUserInteraction() {
+    if (isPlaying) stopAutoPlay();
+    if (userInteractionTimer) clearTimeout(userInteractionTimer);
+    userInteractionTimer = setTimeout(function() {
+      updateCurrentIndexFromScroll();
+      startAutoPlay();
+    }, RESUME_DELAY);
+  }
+
+  // Toggle button
+  autoPlayToggle.addEventListener('click', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    toggleAutoPlay();
+  });
+
+  // User scroll via wheel
+  document.addEventListener('wheel', function(e) {
+    if (isAutoScrolling) return;
+    if (isPlaying) pauseForUserInteraction();
+  }, { passive: true });
+
+  // User touch
+  document.addEventListener('touchstart', function() {
+    if (isAutoScrolling) return;
+    if (isPlaying) pauseForUserInteraction();
+  }, { passive: true });
+
+  // Side-nav clicks => full stop (no auto-resume)
+  document.querySelectorAll('.side-nav-dot').forEach(function(dot) {
+    dot.addEventListener('click', function() {
+      if (isPlaying) stopAutoPlay();
+    });
+  });
+
+  // IntersectionObserver to update currentIndex when user manually scrolls
+  var sectionObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting && !isAutoScrolling) {
+        var id = entry.target.id;
+        var idx = parseInt(id.replace('s', '')) - 1;
+        if (idx >= 0 && idx < totalSections) {
+          currentIndex = idx;
+          if (isPlaying) {
+            updateIndicator();
+            startProgress();
+          }
+        }
+      }
+    });
+  }, { threshold: 0.5 });
+
+  sections.forEach(function(s) { sectionObserver.observe(s); });
+
+  // Start after initial delay
+  setTimeout(function() {
+    startAutoPlay();
+  }, INITIAL_DELAY);
+})();
+</script>
+</body>
+</html>

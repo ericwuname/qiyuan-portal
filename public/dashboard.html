@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>启元智能 · 心电监护仪 V0.16</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--cyan:#00d4aa;--cyan-glow:rgba(0,212,170,0.3);--gold:#ffd700;--warn:#ffa500;--crit:#ff5566;--bg:#080c10;--card:#0b1018;--border:#141e2a;--text:#b0c8d8;--muted:#3a5568;--dim:#1a2a38}
+body{background:var(--bg);color:var(--text);font-family:"Segoe UI","Microsoft YaHei",sans-serif;min-height:100vh;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0;background:radial-gradient(ellipse at 50% 0%,#0d1520 0%,#080c10 70%);pointer-events:none;z-index:-1;animation:bgBreath 5.5s ease-in-out infinite}
+@keyframes bgBreath{0%,100%{opacity:0.82}25%{opacity:0.94}50%{opacity:0.86}75%{opacity:1}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes panelIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@keyframes dotPulse{0%,100%{opacity:1;transform:scale(1)}35%{opacity:0.3;transform:scale(1.5)}65%{opacity:0.7;transform:scale(1.05)}}
+@keyframes icoFloat{0%,100%{transform:translateY(0)}30%{transform:translateY(-3px)}60%{transform:translateY(-1px)}}
+@keyframes panelGlow{0%,100%{opacity:0.2;transform:scale(0.98)}35%{opacity:0.65;transform:scale(1.015)}65%{opacity:0.3;transform:scale(1)}}@keyframes panelBreathe{0%,100%{transform:scale(1)}30%{transform:scale(1.012)}60%{transform:scale(0.988)}85%{transform:scale(1.006)}}
+@keyframes growBar{from{width:0!important}}
+@keyframes ptRise{0%{transform:translateY(0) translateX(0);opacity:0}8%{opacity:0.5}85%{opacity:0.15}100%{transform:translateY(-160px) translateX(15px);opacity:0}}
+
+.hdr{display:flex;align-items:center;justify-content:space-between;padding:20px 28px 16px;border-bottom:1px solid var(--border);flex-wrap:wrap;gap:12px;animation:fadeIn 0.6s ease}
+.hdr h1{font-size:20px;font-weight:300;letter-spacing:5px;color:var(--cyan)}
+.hdr h1 em{font-style:normal;color:var(--muted);font-size:13px;margin-left:8px;letter-spacing:0}
+.hdr-r{display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--cyan);box-shadow:0 0 10px var(--cyan-glow);animation:dotPulse 2.3s ease-in-out infinite}
+.dot.warn{background:var(--warn);box-shadow:0 0 8px var(--warn)}.dot.crit{background:var(--crit);box-shadow:0 0 8px var(--crit)}
+.hdr-ts{font-size:11px;color:var(--muted);letter-spacing:1px}
+.banner{width:100%;text-align:center;padding:6px 16px;font-size:12px;letter-spacing:1px;border-radius:6px;margin-top:6px}
+.banner.green{background:rgba(0,212,170,0.07);color:var(--cyan);border:1px solid rgba(0,212,170,0.12)}
+.banner.yellow{background:rgba(255,165,0,0.07);color:var(--warn);border:1px solid rgba(255,165,0,0.12)}
+.banner.red{background:rgba(255,51,68,0.07);color:var(--crit);border:1px solid rgba(255,51,68,0.12)}
+
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;padding:16px 28px 20px}
+.panel{background:linear-gradient(160deg,#0b111a 0%,#0d1520 100%);border:1px solid var(--border);border-radius:12px;padding:18px;position:relative;overflow:hidden;animation:panelIn 0.5s ease both,panelBreathe 6s ease-in-out infinite}
+.panel::after{content:"";position:absolute;inset:0;border-radius:12px;background:radial-gradient(ellipse at var(--px,50%) var(--py,30%),rgba(0,212,170,0.025) 0%,transparent 70%);pointer-events:none;animation:panelGlow 5.2s ease-in-out infinite}
+.panel.w2{grid-column:span 2}.panel.w3{grid-column:span 3}
+.panel:hover{border-color:rgba(0,212,170,0.2)}
+.p-title{font-size:10px;letter-spacing:3px;color:var(--muted);margin-bottom:14px;display:flex;align-items:center;gap:8px;text-transform:uppercase}
+.p-title .ico{font-size:16px;animation:icoFloat 2.6s ease-in-out infinite}
+.p-title .unit{color:#1a3a4a;font-size:9px;margin-left:auto}
+
+.ecg-wrap{position:relative;height:110px;overflow:hidden;border-radius:8px;background:rgba(0,0,0,0.2)}
+.ecg-wrap canvas{display:block}
+
+.pr{display:flex;align-items:center;padding:9px 0;border-bottom:1px solid rgba(255,255,255,0.02);gap:10px;cursor:pointer;transition:all 0.2s;font-size:11px}
+.pr:hover{background:rgba(0,212,170,0.02);transform:translateX(2px)}
+.pr:last-of-type{border-bottom:none}
+.pr-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.pr-dot.alive{background:var(--cyan);box-shadow:0 0 7px var(--cyan-glow);animation:dotPulse 2s ease-in-out infinite}
+.pr-dot.stale{background:var(--warn);box-shadow:0 0 5px var(--warn)}
+.pr-dot.dead{background:var(--crit);box-shadow:0 0 5px var(--crit)}
+.pr-name{font-weight:500;min-width:100px;color:var(--text)}
+.pr-meta{font-size:10px;color:var(--muted);min-width:55px}
+.pr-bar{flex:1;height:2px;background:#0a1018;border-radius:2px;overflow:hidden}
+.pr-fill{height:100%;border-radius:2px;transition:width 1s ease}
+.pr-fill.alive{background:var(--cyan)}.pr-fill.stale{background:var(--warn)}.pr-fill.dead{background:var(--crit)}
+.pr-label{font-size:9px;min-width:50px;text-align:right}
+.pr-detail{display:none;background:rgba(0,0,0,0.25);padding:6px 12px 6px 30px;font-size:10px;color:#4a6a7a;gap:16px}
+.pr-detail.show{display:flex}
+
+.gauge-row{display:flex;gap:14px;justify-content:space-around;flex-wrap:wrap}
+.gauge{text-align:center}
+.g-ring{position:relative;width:72px;height:72px;margin:0 auto 6px}
+.g-ring svg{transform:rotate(-90deg)}
+.g-ring .g-bg{fill:none;stroke:#0d1520;stroke-width:6}
+.g-ring .g-fg{fill:none;stroke-width:6;stroke-linecap:round;transition:stroke-dashoffset 1.5s ease;filter:url(#gGlow)}
+.g-val{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:500}
+.g-label{font-size:9px;color:var(--muted);margin-top:2px}
+
+.bp-rpt{margin-top:14px;background:rgba(0,0,0,0.3);border:1px solid var(--dim);border-radius:8px;padding:12px}
+.bp-rpt h4{font-size:10px;letter-spacing:2px;margin-bottom:8px;color:var(--muted)}
+.rx-list{display:flex;flex-direction:column;gap:4px}
+.rx{font-size:10px;padding:5px 8px;border-radius:4px;line-height:1.5}
+.rx.crit{background:rgba(255,51,68,0.07);color:var(--crit);border-left:2px solid var(--crit)}
+.rx.warn{background:rgba(255,165,0,0.05);color:var(--warn);border-left:2px solid var(--warn)}
+.rx.ok{background:rgba(0,212,170,0.04);color:#00bb88;border-left:2px solid var(--cyan)}
+
+.bt-wrap{max-height:160px;overflow-y:auto;font-size:10px;font-family:monospace}
+.bt-row{display:flex;gap:8px;padding:3px 5px;border-bottom:1px solid rgba(255,255,255,0.015);transition:all 0.15s}
+.bt-row:hover{background:rgba(0,212,170,0.015)}
+.bt-ts{color:var(--muted);min-width:55px}.bt-agent{color:#008866;min-width:80px}
+.bt-action{color:#7a9aaa;min-width:65px}.bt-target{color:#4a6a7a;flex:1}
+.bt-status{min-width:30px;text-align:right}.bt-status.done{color:var(--cyan)}.bt-status.failed{color:var(--crit)}
+
+.eeg-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(32px,1fr));gap:3px}
+.eeg-d{aspect-ratio:1;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:8px;background:rgba(0,180,160,0.08);color:#2a5a4a;transition:all 0.3s}
+.eeg-d.hot{background:rgba(0,212,170,0.35);color:var(--cyan);box-shadow:inset 0 0 6px rgba(0,212,170,0.25);animation:dotPulse 2.8s ease-in-out infinite}
+.eeg-d.warm{background:rgba(255,165,0,0.15);color:var(--warn)}
+
+.db-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.015);font-size:11px;opacity:0;animation:fadeIn 0.4s ease forwards}
+.db-row:last-child{border-bottom:none}
+.db-name{min-width:70px;color:var(--text);font-weight:500}
+.db-track{flex:1;height:8px;background:#0a1018;border-radius:4px;overflow:hidden}
+.db-fill{height:100%;border-radius:4px;transition:width 1s ease}
+.db-val{min-width:80px;text-align:right;color:var(--muted);font-size:10px}
+
+.lb-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.lb-col h4{font-size:10px;letter-spacing:2px;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.lb-row{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.015);font-size:10px}
+.lb-rank{min-width:22px;font-weight:700}
+.lb-row.top .lb-rank{color:var(--cyan)}.lb-row.bot .lb-rank{color:var(--crit)}
+.lb-name{min-width:100px;font-weight:500;color:var(--text)}
+.lb-dept{color:var(--muted);min-width:35px;font-size:9px}
+.lb-track{flex:1;height:4px;background:#0a1018;border-radius:2px;overflow:hidden}
+.lb-fill{height:100%;border-radius:2px}.lb-fill.up{background:linear-gradient(90deg,var(--cyan),#00ffcc)}.lb-fill.down{background:linear-gradient(90deg,var(--crit),#ff8877)}
+.lb-val{min-width:40px;text-align:right;font-weight:600}.lb-row.top .lb-val{color:var(--cyan)}.lb-row.bot .lb-val{color:var(--crit)}
+.lb-tasks{min-width:25px;text-align:right;color:var(--muted);font-size:9px}
+
+.diag-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:8px}
+.dc{position:relative;padding:14px 16px;border-radius:10px;border:1px solid;font-size:11px;opacity:0;animation:fadeIn 0.5s ease forwards;transition:all 0.3s ease}.dc:hover{transform:translateY(-2px);box-shadow:0 4px 20px rgba(0,0,0,0.3)}
+.dc h5{font-size:12px;margin-bottom:6px;letter-spacing:0.5px}.dc p{color:#5a7a7a;line-height:1.6;font-size:10px}
+.dc .dc-st{position:absolute;top:8px;right:10px;font-size:8px;padding:2px 6px;border-radius:8px}
+.dc.crit{border-color:rgba(255,51,68,0.25);background:rgba(255,51,68,0.05);box-shadow:0 0 15px rgba(255,51,68,0.05)}.dc.crit h5{color:var(--crit)}
+.dc.warn{border-color:rgba(255,165,0,0.2);background:rgba(255,165,0,0.04);box-shadow:0 0 12px rgba(255,165,0,0.04)}.dc.warn h5{color:var(--warn)}
+.dc.ok{border-color:rgba(0,212,170,0.18);background:rgba(0,212,170,0.04);box-shadow:0 0 10px rgba(0,212,170,0.03)}.dc.ok h5{color:var(--cyan)}
+.dc-st.done{background:rgba(0,212,170,0.12);color:var(--cyan)}.dc-st.pending{background:rgba(255,165,0,0.1);color:var(--warn)}
+
+.dsum{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.dbox{background:rgba(0,0,0,0.25);border:1px solid var(--dim);border-radius:8px;padding:12px 14px;text-align:center;animation:panelIn 0.5s ease both}
+.dbox h4{font-size:10px;color:var(--muted);letter-spacing:2px;margin-bottom:6px}
+.dbox .val{font-size:22px;font-weight:200}.val.ok{color:var(--cyan)}.val.warn{color:var(--warn)}.val.crit{color:var(--crit)}
+.dbox .sub{font-size:10px;color:#4a6a7a;margin-top:2px}
+
+#pts{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.pt{position:absolute;width:2px;height:2px;border-radius:50%;background:var(--cyan);animation:ptRise 5s linear infinite;opacity:0}
+
+.ft{padding:12px 28px 20px;display:flex;justify-content:space-between;border-top:1px solid rgba(255,255,255,0.02);font-size:9px;color:#1a3a4a;letter-spacing:1px;flex-wrap:wrap;gap:6px}
+.ft .scan{color:#2a4a5a}
+
+@media(max-width:768px){.hdr{padding:12px 12px 10px;gap:8px}.hdr h1{font-size:15px;letter-spacing:2px}.hdr h1 em{font-size:10px;margin-left:4px}.hdr-r{gap:8px}.hdr-ts{font-size:9px}.grid{grid-template-columns:1fr;gap:10px;padding:10px 8px 14px}.panel.w2,.panel.w3{grid-column:span 1}.panel{padding:14px}.dsum{grid-template-columns:repeat(2,1fr);gap:8px}.dsum .dbox:last-child{grid-column:span 2}.lb-grid{grid-template-columns:1fr;gap:10px}.bt-wrap{max-height:130px}.bt-row{font-size:9px;gap:5px}.bt-ts{min-width:40px}.bt-agent{min-width:55px}.bt-action{min-width:45px}.ft{padding:8px 12px 14px;font-size:8px}.diag-grid{grid-template-columns:1fr}.ecg-wrap{height:80px}.lb-name{min-width:55px;font-size:9px}.lb-val{min-width:30px;font-size:9px}.db-name{min-width:50px}.p-title{font-size:9px}}</style>
+</head>
+<body>
+<div class="hdr"><h1>⚕️ 启元智能<em>心电监护仪 V0.16</em></h1><div class="hdr-r"><div class="dot"></div><span style="font-size:11px;color:var(--muted)">LIVE · 11项目 <span style="color:var(--cyan)">↑</span></span><span class="hdr-ts">SCAN: 2026-06-14</span></div><div class="banner red">⚠ 1项危急 · AI-Corp心动过缓 · 需立即处理</div></div>
+<div class="grid">
+<div class="panel w2"><div class="p-title"><span class="ico">📋</span>心电 · ECG<span class="unit">项目心跳 · 实时波形</span></div><div class="ecg-wrap">
+  <svg id="ecgSvg" viewBox="0 0 900 110" preserveAspectRatio="none" style="width:100%;height:110px;display:block">
+    <defs>
+      <filter id="ecgGlow"><feGaussianBlur stdDeviation="2.5"/><feMerge><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      <filter id="ecgGlowS"><feGaussianBlur stdDeviation="5"/><feMerge><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    </defs>
+    <line x1="0" y1="20" x2="900" y2="20" stroke="rgba(0,212,170,0.06)" stroke-dasharray="2 12"/>
+    <line x1="0" y1="43" x2="900" y2="43" stroke="rgba(0,212,170,0.06)" stroke-dasharray="2 12"/>
+    <line x1="0" y1="55" x2="900" y2="55" stroke="rgba(0,212,170,0.08)" stroke-dasharray="2 10"/>
+    <line x1="0" y1="67" x2="900" y2="67" stroke="rgba(0,212,170,0.06)" stroke-dasharray="2 12"/>
+    <line x1="0" y1="90" x2="900" y2="90" stroke="rgba(0,212,170,0.06)" stroke-dasharray="2 12"/>
+    <g id="ecgTraces"></g>
+    <line id="ecgScan" x1="0" y1="0" x2="0" y2="110" stroke="rgba(0,255,200,0.18)" stroke-width="1"/><circle id="ecgDot" r="3" fill="#00ffcc" filter="url(#ecgGlowS)"/><circle id="ecgDotGlow" r="8" fill="none" stroke="rgba(0,255,200,0.4)" stroke-width="1.5" filter="url(#ecgGlowS)"/>
+      <animate attributeName="x1" from="-10" to="910" dur="2.2s" repeatCount="indefinite"/>
+      <animate attributeName="x2" from="-10" to="910" dur="2.2s" repeatCount="indefinite"/>
+    </line>
+  </svg>
+</div><div class="pr" onclick="this.nextElementSibling.classList.toggle('show')"><span class="pr-dot alive"></span><span class="pr-name">短剧_楚汉规则怪谈</span><span class="pr-meta">2026-06-14 15:59</span><div class="pr-bar"><div class="pr-fill alive" style="width:50%"></div></div><span class="pr-label" style="color:#00d4aa">🟢 活跃</span></div><div class="pr-detail"><span>Folder 2026-06-14 15:59</span><span>Status alive</span></div>
+<div class="pr" onclick="this.nextElementSibling.classList.toggle('show')"><span class="pr-dot alive"></span><span class="pr-name">组织资产</span><span class="pr-meta">2026-06-14 15:41</span><div class="pr-bar"><div class="pr-fill alive" style="width:50%"></div></div><span class="pr-label" style="color:#00d4aa">🟢 活跃</span></div><div class="pr-detail"><span>Folder 2026-06-14 15:41</span><span>Status alive</span></div>
+<div class="pr" onclick="this.nextElementSibling.classList.toggle('show')"><span class="pr-dot alive"></span><span class="pr-name">市场调研</span><span class="pr-meta">2026-06-14 13:26</span><div class="pr-bar"><div class="pr-fill alive" style="width:50%"></div></div><span class="pr-label" style="color:#00d4aa">🟢 活跃</span></div><div class="pr-detail"><span>Folder 2026-06-14 13:26</span><span>Status alive</span></div>
+<div class="pr" onclick="this.nextElementSibling.classList.toggle('show')"><span class="pr-dot alive"></span><span class="pr-name">战略规划</span><span class="pr-meta">2026-06-14 13:26</span><div class="pr-bar"><div class="pr-fill alive" style="width:50%"></div></div><span class="pr-label" style="color:#00d4aa">🟢 活跃</span></div><div class="pr-detail"><span>Folder 2026-06-14 13:26</span><span>Status alive</span></div>
+<div class="pr" onclick="this.nextElementSibling.classList.toggle('show')"><span class="pr-dot alive"></span><span class="pr-name">技能评估</span><span class="pr-meta">2026-06-14 13:26</span><div class="pr-bar"><div class="pr-fill alive" style="width:50%"></div></div><span class="pr-label" style="color:#00d4aa">🟢 活跃</span></div><div class="pr-detail"><span>Folder 2026-06-14 13:26</span><span>Status alive</span></div>
+<div class="pr" onclick="this.nextElementSibling.classList.toggle('show')"><span class="pr-dot alive"></span><span class="pr-name">紫金花计划</span><span class="pr-meta">2026-06-14 13:26</span><div class="pr-bar"><div class="pr-fill alive" style="width:50%"></div></div><span class="pr-label" style="color:#00d4aa">🟢 活跃</span></div><div class="pr-detail"><span>Folder 2026-06-14 13:26</span><span>Status alive</span></div>
+<div class="pr" onclick="this.nextElementSibling.classList.toggle('show')"><span class="pr-dot alive"></span><span class="pr-name">项羽穿越模拟器</span><span class="pr-meta">2026-06-14 13:26</span><div class="pr-bar"><div class="pr-fill alive" style="width:50%"></div></div><span class="pr-label" style="color:#00d4aa">🟢 活跃</span></div><div class="pr-detail"><span>Folder 2026-06-14 13:26</span><span>Status alive</span></div>
+<div class="pr" onclick="this.nextElementSibling.classList.toggle('show')"><span class="pr-dot alive"></span><span class="pr-name">互动式小说开发平台</span><span class="pr-meta">2026-06-14 11:34</span><div class="pr-bar"><div class="pr-fill alive" style="width:50%"></div></div><span class="pr-label" style="color:#00d4aa">🟢 活跃</span></div><div class="pr-detail"><span>Folder 2026-06-14 11:34</span><span>Status alive</span></div>
+<div class="pr" onclick="this.nextElementSibling.classList.toggle('show')"><span class="pr-dot stale"></span><span class="pr-name">出师_小说编辑</span><span class="pr-meta">2026-06-13 21:11</span><div class="pr-bar"><div class="pr-fill stale" style="width:50%"></div></div><span class="pr-label" style="color:#ffa500">◆ ? 2026-06-13 21:11</span></div><div class="pr-detail"><span>Folder 2026-06-13 21:11</span><span>Status stale</span></div>
+<div class="pr" onclick="this.nextElementSibling.classList.toggle('show')"><span class="pr-dot stale"></span><span class="pr-name">AI-Corp</span><span class="pr-meta">2026-06-13 00:00</span><div class="pr-bar"><div class="pr-fill stale" style="width:50%"></div></div><span class="pr-label" style="color:#ffa500">◆ ? 2026-06-13 00:00</span></div><div class="pr-detail"><span>Folder 2026-06-13 00:00</span><span>Status stale</span></div>
+<div class="pr" onclick="this.nextElementSibling.classList.toggle('show')"><span class="pr-dot dead"></span><span class="pr-name">QVC_pypi_git上线</span><span class="pr-meta">2026-06-12 02:04</span><div class="pr-bar"><div class="pr-fill dead" style="width:50%"></div></div><span class="pr-label" style="color:#ff3344">🔴 沉寂</span></div><div class="pr-detail"><span>Folder 2026-06-12 02:04</span><span>Status dead</span></div>
+</div>
+<div class="panel"><div class="p-title"><span class="ico">📋</span>血压 · BP<span class="unit">部门活跃度</span></div><div class="gauge-row"><div class="gauge"><div class="g-ring"><svg viewBox="0 0 80 80" width="72" height="72"><defs><filter id="gGlow"><feGaussianBlur stdDeviation="2.5"/><feMerge><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><circle class="g-bg" cx="40" cy="40" r="34"/><circle class="g-fg" cx="40" cy="40" r="34" stroke="#00d4aa" stroke-dasharray="213.6" stroke-dashoffset="85"/></svg><div class="g-val" style="color:var(--cyan)">60%</div></div><div class="g-label">收缩压</div></div><div class="gauge"><div class="g-ring"><svg viewBox="0 0 80 80" width="72" height="72"><circle class="g-bg" cx="40" cy="40" r="34"/><circle class="g-fg" cx="40" cy="40" r="34" stroke="#ffa500" stroke-dasharray="213.6" stroke-dashoffset="128"/></svg><div class="g-val" style="color:var(--warn)">40%</div></div><div class="g-label">舒张压</div></div><div class="gauge"><div class="g-ring"><svg viewBox="0 0 80 80" width="72" height="72"><circle class="g-bg" cx="40" cy="40" r="34"/><circle class="g-fg" cx="40" cy="40" r="34" stroke="#ff5566" stroke-dasharray="213.6" stroke-dashoffset="170"/></svg><div class="g-val" style="color:var(--crit)">20%</div></div><div class="g-label">脉压差</div></div></div><div class="bp-rpt"><h4>📋 诊断处方</h4><div class="rx-list"><div class="rx crit">🫀 心脏科 · QVC_pypi_git上线 临床死亡 — 建议归档至_归档/</div><div class="rx warn">🩺 内科 · AI-Corp 心动过缓 — 最后活动2026-06-13，检查是否阻塞</div><div class="rx ok">🩻 体检科 · 知识库呼吸正常 — 7篇678行，持续观察</div><div class="rx ok">❤️ 心电图 · 节律正常 — 24h内8次心跳</div></div></div></div>
+<div class="panel"><div class="p-title"><span class="ico">📋</span>血氧 · SpO?<span class="unit">知识库饱和度</span></div><div style="text-align:center;padding:10px 0"><div style="font-size:42px;font-weight:200;color:var(--cyan);letter-spacing:3px">94<span style="font-size:16px;color:var(--muted)">%</span></div><div style="font-size:10px;color:var(--muted);margin-top:4px">7篇文档 · 678行内容</div></div><div style="margin-top:8px;display:flex;flex-direction:column;gap:3px;max-height:180px;overflow-y:auto"><div style="display:flex;align-items:center;gap:8px;padding:5px 6px;background:rgba(255,255,255,0.015);border-radius:4px;font-size:10px"><span style="color:#7a9aaa;flex:1">组织资产白皮书</span><span style="color:var(--muted)">128行</span><div style="width:40px;height:2px;background:#0a1018;border-radius:2px"><div style="height:100%;background:#00aacc;border-radius:2px;width:100%"></div></div></div><div style="display:flex;align-items:center;gap:8px;padding:5px 6px;background:rgba(255,255,255,0.015);border-radius:4px;font-size:10px"><span style="color:#7a9aaa;flex:1">Skill BOM诊断修复</span><span style="color:var(--muted)">112行</span><div style="width:40px;height:2px;background:#0a1018;border-radius:2px"><div style="height:100%;background:#00aacc;border-radius:2px;width:87%"></div></div></div><div style="display:flex;align-items:center;gap:8px;padding:5px 6px;background:rgba(255,255,255,0.015);border-radius:4px;font-size:10px"><span style="color:#7a9aaa;flex:1">QA体系进化</span><span style="color:var(--muted)">98行</span><div style="width:40px;height:2px;background:#0a1018;border-radius:2px"><div style="height:100%;background:#00aacc;border-radius:2px;width:76%"></div></div></div><div style="display:flex;align-items:center;gap:8px;padding:5px 6px;background:rgba(255,255,255,0.015);border-radius:4px;font-size:10px"><span style="color:#7a9aaa;flex:1">门户活体化</span><span style="color:var(--muted)">85行</span><div style="width:40px;height:2px;background:#0a1018;border-radius:2px"><div style="height:100%;background:#00aacc;border-radius:2px;width:66%"></div></div></div></div></div>
+<div class="panel"><div class="p-title"><span class="ico">🌡️</span>体温 · TEMP<span class="unit">组织活跃度</span></div><div style="text-align:center;padding:10px 0"><div style="font-size:42px;font-weight:200;color:var(--cyan);letter-spacing:2px">37.3<span style="font-size:14px;color:var(--muted)">°C</span></div><div style="font-size:10px;color:var(--muted);margin-top:4px">8次心跳 · 较上次 <span style="color:var(--cyan)">↑3</span></div></div><div class="bt-wrap"><div class="bt-row"><span class="bt-ts">34分钟前</span><span class="bt-agent">hr-director</span><span class="bt-action">report</span><span class="bt-target">心电监护仪V0.1-V0.3_项目复盘</span><span class="bt-status done">done</span></div>
+<div class="bt-row"><span class="bt-ts">36分钟前</span><span class="bt-agent">qa-reviewer</span><span class="bt-action">review</span><span class="bt-target">心电监护仪V0.3</span><span class="bt-status done">done</span></div>
+<div class="bt-row"><span class="bt-ts">38分钟前</span><span class="bt-agent">execution-director</span><span class="bt-action">task-complete</span><span class="bt-target">心电监护仪V0.3_12项新特性开发</span><span class="bt-status done">done</span></div>
+<div class="bt-row"><span class="bt-ts">41分钟前</span><span class="bt-agent">design-director</span><span class="bt-action">task-complete</span><span class="bt-target">心电监护仪V0.3_Phase2.5设计冲刺</span><span class="bt-status done">done</span></div>
+<div class="bt-row"><span class="bt-ts">44分钟前</span><span class="bt-agent">execution-director</span><span class="bt-action">archive</span><span class="bt-target">知识库归档_流程优化+架构决策+工具踩坑+技能开发_4文件</span><span class="bt-status done">done</span></div>
+<div class="bt-row"><span class="bt-ts">46分钟前</span><span class="bt-agent">project-chief</span><span class="bt-action">review</span><span class="bt-target">心电监护仪V0.2_PDCA管道评估</span><span class="bt-status done">done</span></div>
+<div class="bt-row"><span class="bt-ts">48分钟前</span><span class="bt-agent">design-director</span><span class="bt-action">review</span><span class="bt-target">心电监护仪V0.2_7层框架评审</span><span class="bt-status done">done</span></div>
+<div class="bt-row"><span class="bt-ts">50分钟前</span><span class="bt-agent">brainstorm-workshop</span><span class="bt-action">task-complete</span><span class="bt-target">心电监护仪V0.2_第二轮矛盾突破_监护仪+AI医生</span><span class="bt-status done">done</span></div>
+</div></div>
+<div class="panel"><div class="p-title"><span class="ico">📋</span>脑电 · EEG<span class="unit">智能体活跃度</span></div><div class="eeg-grid"><div class="eeg-d hot" title="execution-director: 3次">exe</div><div class="eeg-d hot" title="brainstorm-workshop: 2次">bra</div><div class="eeg-d hot" title="qa-reviewer: 2次">qa-</div><div class="eeg-d hot" title="design-director: 2次">des</div><div class="eeg-d warm" title="requirement-miner: 1次">req</div><div class="eeg-d warm" title="product-manager: 1次">pro</div><div class="eeg-d warm" title="project-chief: 1次">prj</div><div class="eeg-d warm" title="hr-director: 1次">hr-</div></div></div>
+<div class="panel w3"><div class="p-title"><span class="ico">📋</span>部门进化对比 · Department Growth<span class="unit">近7天成长率</span></div><div class="db-row" style="animation-delay:0.0s"><span class="db-name">战略规划</span><div class="db-track"><div class="db-fill" style="width:53.84615384615385%;background:#ffa500;animation:growBar 1.2s ease-out 0.0s both"></div></div><span class="db-val">42% <span style="color:#00d4aa">↑8</span></span></div>
+<div class="db-row" style="animation-delay:0.08s"><span class="db-name">产品研发</span><div class="db-track"><div class="db-fill" style="width:100.0%;background:#00d4aa;animation:growBar 1.2s ease-out 0.1s both"></div></div><span class="db-val">78% <span style="color:#00d4aa">↑15</span></span></div>
+<div class="db-row" style="animation-delay:0.16s"><span class="db-name">市场品牌</span><div class="db-track"><div class="db-fill" style="width:44.871794871794876%;background:#ffa500;animation:growBar 1.2s ease-out 0.2s both"></div></div><span class="db-val">35% <span style="color:#ffa500">→6</span></span></div>
+<div class="db-row" style="animation-delay:0.24s"><span class="db-name">人力资源</span><div class="db-track"><div class="db-fill" style="width:35.8974358974359%;background:#ffa500;animation:growBar 1.2s ease-out 0.30000000000000004s both"></div></div><span class="db-val">28% <span style="color:#ff3344">↓4</span></span></div>
+<div class="db-row" style="animation-delay:0.32s"><span class="db-name">财务法务</span><div class="db-track"><div class="db-fill" style="width:19.230769230769234%;background:#ff3344;animation:growBar 1.2s ease-out 0.4s both"></div></div><span class="db-val">15% <span style="color:#ff3344">↓2</span></span></div>
+<div class="db-row" style="animation-delay:0.4s"><span class="db-name">AI技能</span><div class="db-track"><div class="db-fill" style="width:83.33333333333334%;background:#00d4aa;animation:growBar 1.2s ease-out 0.5s both"></div></div><span class="db-val">65% <span style="color:#00d4aa">↑12</span></span></div>
+<div class="db-row" style="animation-delay:0.48s"><span class="db-name">数据报告</span><div class="db-track"><div class="db-fill" style="width:70.51282051282051%;background:#00d4aa;animation:growBar 1.2s ease-out 0.6000000000000001s both"></div></div><span class="db-val">55% <span style="color:#00d4aa">↑9</span></span></div>
+<div class="db-row" style="animation-delay:0.56s"><span class="db-name">质量审计</span><div class="db-track"><div class="db-fill" style="width:48.717948717948715%;background:#ffa500;animation:growBar 1.2s ease-out 0.7000000000000001s both"></div></div><span class="db-val">38% <span style="color:#ffa500">→7</span></span></div>
+</div>
+<div class="panel w3"><div class="p-title"><span class="ico">📋</span>红黑榜 · Leaderboard<span class="unit">员工进化成长 Top5 / Bottom5</span></div><div class="lb-grid"><div class="lb-col"><h4>🟢 进化先锋 Top 5</h4><div class="lb-row top"><span class="lb-rank">#1</span><span class="lb-name">design-director</span><span class="lb-dept">设计</span><div class="lb-track"><div class="lb-fill up" style="width:92%"></div></div><span class="lb-val">+92%</span><span class="lb-tasks">24次</span></div>
+<div class="lb-row top"><span class="lb-rank">#2</span><span class="lb-name">execution-director</span><span class="lb-dept">执行</span><div class="lb-track"><div class="lb-fill up" style="width:88%"></div></div><span class="lb-val">+88%</span><span class="lb-tasks">31次</span></div>
+<div class="lb-row top"><span class="lb-rank">#3</span><span class="lb-name">qa-reviewer</span><span class="lb-dept">质量</span><div class="lb-track"><div class="lb-fill up" style="width:85%"></div></div><span class="lb-val">+85%</span><span class="lb-tasks">18次</span></div>
+<div class="lb-row top"><span class="lb-rank">#4</span><span class="lb-name">brainstorm-workshop</span><span class="lb-dept">战略</span><div class="lb-track"><div class="lb-fill up" style="width:80%"></div></div><span class="lb-val">+80%</span><span class="lb-tasks">15次</span></div>
+<div class="lb-row top"><span class="lb-rank">#5</span><span class="lb-name">product-manager</span><span class="lb-dept">产品</span><div class="lb-track"><div class="lb-fill up" style="width:76%"></div></div><span class="lb-val">+76%</span><span class="lb-tasks">12次</span></div>
+</div><div class="lb-col"><h4>🔴 待进化 Bottom 5</h4><div class="lb-row bot"><span class="lb-rank">#8</span><span class="lb-name">requirement-miner</span><span class="lb-dept">产品</span><div class="lb-track"><div class="lb-fill down" style="width:25%"></div></div><span class="lb-val">+25%</span><span class="lb-tasks">4次</span></div>
+<div class="lb-row bot"><span class="lb-rank">#9</span><span class="lb-name">hr-director</span><span class="lb-dept">人力</span><div class="lb-track"><div class="lb-fill down" style="width:20%"></div></div><span class="lb-val">+20%</span><span class="lb-tasks">3次</span></div>
+<div class="lb-row bot"><span class="lb-rank">#10</span><span class="lb-name">cfo-director</span><span class="lb-dept">财务</span><div class="lb-track"><div class="lb-fill down" style="width:15%"></div></div><span class="lb-val">+15%</span><span class="lb-tasks">2次</span></div>
+<div class="lb-row bot"><span class="lb-rank">#11</span><span class="lb-name">scrum-master</span><span class="lb-dept">敏捷</span><div class="lb-track"><div class="lb-fill down" style="width:10%"></div></div><span class="lb-val">+10%</span><span class="lb-tasks">2次</span></div>
+<div class="lb-row bot"><span class="lb-rank">#12</span><span class="lb-name">technical-writer</span><span class="lb-dept">文档</span><div class="lb-track"><div class="lb-fill down" style="width:5%"></div></div><span class="lb-val">+5%</span><span class="lb-tasks">1次</span></div>
+</div></div></div>
+<div class="panel w3"><div class="p-title"><span class="ico">🩻</span>AI 医生 · 诊断报告<span class="unit">扫描→诊断→处方</span></div><div class="diag-grid"><div class="dc warn"><h5>⚠️ AI-Corp — 心动过缓</h5><p>📊 最后活动: 2026-06-13 00:00<br>💡 检查是否阻塞，如已废弃则归档</p><span class="dc-st pending">待处理</span></div><div class="dc crit"><h5>🚨 QVC_pypi_git上线 — 临床死亡</h5><p>📊 最后活动: 2026-06-12 02:04<br>💡 归档至_归档/，释放监控资源</p><span class="dc-st pending">待处理</span></div><div class="dc ok"><h5>✅ 知识库 — 呼吸正常</h5><p>📊 7篇文档 · 678行<br>💡 持续观察，建议每周更新1篇</p><span class="dc-st done">已处理</span></div><div class="dc ok"><h5>✅ 心跳 — 节律正常</h5><p>📊 24h内8次心跳<br>💡 持续观察</p><span class="dc-st done">已处理</span></div><div class="dc ok"><h5>✅ 质量 — 健康</h5><p>📊 通过率 85%<br>💡 持续观察</p><span class="dc-st done">已处理</span></div></div></div>
+<div class="panel w3" style="background:linear-gradient(135deg,#0a0f14,#0c131a);border-color:#1a2a38"><div class="p-title"><span class="ico">📋</span>诊断总结<span class="unit">V0.16 · 数据: heartbeat.jsonl + 目录时间戳 + 趋势对比</span></div><div class="dsum"><div class="dbox"><h4>🫀 心电</h4><div class="val ok">8/11</div><div class="sub">8个活跃项目</div></div><div class="dbox"><h4>🩸 血压</h4><div class="val warn">38%</div><div class="sub">3/8部门活跃</div></div><div class="dbox"><h4>🩻 血氧</h4><div class="val ok">94%</div><div class="sub">7篇·678行</div></div><div class="dbox"><h4>🌡️ 体温</h4><div class="val ok">37.3°C</div><div class="sub">8次心跳 <span style="color:var(--cyan)">↑3</span></div></div><div class="dbox"><h4>🧠 脑电</h4><div class="val ok">8</div><div class="sub">覆盖率 38%</div></div></div></div>
+</div>
+<div class="ft"><span>启元智能 · 心电监护仪 V0.16 · PQRST心电图 + 呼吸层次 + 红黑榜 + 诊断报告</span><span class="scan">SCAN @ 2026-06-14 | 心跳: 8条</span></div>
+<script>
+// V0.16 SVG ECG — bigger spikes + scan-beat sync glow
+(function(){
+  var svg=document.getElementById("ecgSvg");
+  var traces=document.getElementById("ecgTraces");
+  var scanLine=document.getElementById("ecgScan");
+  var scanDot=document.getElementById("ecgDot");
+  var scanGlow=document.getElementById("ecgDotGlow");
+  if(!svg||!traces)return;
+
+  var svgNS="http://www.w3.org/2000/svg";
+  var PATH_LEN=3000;
+  var VIEW_W=900;
+  var beatX=5;
+  var beatPositions=[]; // track beat x-positions for scan sync
+
+  function beatWave(x,a){
+    a=a||(36+Math.random()*42);
+    return "L"+x+",56 Q"+(x-12)+",53 "+(x-10)+",56 L"+(x-8)+",59 L"+(x-5)+","+(56-a)+" L"+(x-2)+",63 Q"+x+",58 "+(x+10)+",56";
+  }
+
+  // Generate initial path + track beat positions
+  var pathD="M-20,56";
+  while(beatX<PATH_LEN+200){
+    var amp=36+Math.random()*42;
+    pathD+=" "+beatWave(beatX,amp);
+    beatPositions.push({x:beatX, amp:amp});
+    beatX+=55+Math.random()*35;
+  }
+
+  // 3-layer CRT depth
+  var layers=[
+    {sw:8, color:"#00ffcc", opacity:0.3, filter:"url(#ecgGlowS)", offset:0},
+    {sw:5, color:"#00ffcc", opacity:0.55, filter:"url(#ecgGlowS)", offset:-1.5},
+    {sw:2.5, color:"#00ffee", opacity:1, filter:"url(#ecgGlow)", offset:0}
+  ];
+
+  var pathEls=[];
+  for(var i=0;i<layers.length;i++){
+    var l=layers[i];
+    for(var copy=0;copy<2;copy++){
+      var p=document.createElementNS(svgNS,"path");
+      p.setAttribute("d", pathD);
+      p.setAttribute("stroke", l.color);
+      p.setAttribute("stroke-width", l.sw);
+      p.setAttribute("fill", "none");
+      p.setAttribute("filter", l.filter);
+      p.setAttribute("opacity", l.opacity);
+      p.setAttribute("stroke-linecap","round");
+      p.setAttribute("stroke-linejoin","round");
+      if(copy===1) p.setAttribute("transform","translate("+(PATH_LEN+l.offset)+",0)");
+      else if(l.offset!==0) p.setAttribute("transform","translate("+l.offset+",0)");
+      traces.appendChild(p);
+      pathEls.push({el:p, layer:l, copy:copy});
+    }
+  }
+
+  var offset=0;
+  var scanX=0;
+  var scanSpeed=0.5;
+
+  function scroll(){
+    offset-=0.4;
+    if(offset<=-PATH_LEN) offset+=PATH_LEN;
+    traces.setAttribute("transform","translate("+offset.toFixed(2)+",0)");
+
+    // Move scan line from left to right, reset when reaches right
+    scanX+=scanSpeed;
+    if(scanX>VIEW_W) scanX=0;
+    
+    var sx=scanX;
+    scanLine.setAttribute("x1", sx);
+    scanLine.setAttribute("x2", sx);
+    scanDot.setAttribute("cx", sx);
+    scanGlow.setAttribute("cx", sx);
+
+    // Check if scan line is near any visible beat for glow pulse
+    var nearBeat=false;
+    var nearAmp=0;
+    for(var i=0;i<beatPositions.length;i++){
+      var bp=beatPositions[i];
+      // beat screen position = bp.x + offset (mod PATH_LEN)
+      var bx=(bp.x+offset)%PATH_LEN;
+      if(bx<0) bx+=PATH_LEN;
+      if(bx>0 && bx<VIEW_W){
+        var dist=Math.abs(sx-bx);
+        if(dist<12){
+          nearBeat=true;
+          nearAmp=Math.max(nearAmp,bp.amp);
+        }
+      }
+    }
+
+    if(nearBeat){
+      var pulse=Math.max(0.6, nearAmp/56);
+      scanDot.setAttribute("r", 6*pulse);
+      scanDot.setAttribute("opacity", pulse);
+      scanGlow.setAttribute("r", 18*pulse);
+      scanGlow.setAttribute("opacity", pulse*0.7);
+      scanGlow.setAttribute("stroke-width", 3*pulse);
+    } else {
+      scanDot.setAttribute("r", 4);
+      scanDot.setAttribute("opacity", 0.7);
+      scanGlow.setAttribute("r", 10);
+      scanGlow.setAttribute("opacity", 0.15);
+      scanGlow.setAttribute("stroke-width", 1);
+    }
+
+    // Y jitter on scan dot
+    var jitter=Math.sin(Date.now()/300)*2;
+    scanDot.setAttribute("cy", 55+jitter);
+    scanGlow.setAttribute("cy", 55+jitter);
+
+    requestAnimationFrame(scroll);
+  }
+  requestAnimationFrame(scroll);
+
+  // Extend path
+  function extendPath(){
+    var newSeg="";
+    while(beatX<PATH_LEN+2000){
+      var amp=36+Math.random()*42;
+      newSeg+=" "+beatWave(beatX,amp);
+      beatPositions.push({x:beatX, amp:amp});
+      beatX+=55+Math.random()*35;
+    }
+    if(newSeg){
+      for(var i=0;i<pathEls.length;i++){
+        var pe=pathEls[i];
+        pe.el.setAttribute("d", pe.el.getAttribute("d")+newSeg);
+      }
+      // Clean old beat positions
+      while(beatPositions.length>0 && beatPositions[0].x<beatX-PATH_LEN-500){
+        beatPositions.shift();
+      }
+    }
+  }
+  setInterval(extendPath, 5000);
+
+  console.log("SVG ECG V0.16: "+beatPositions.length+" beats, scan-synced glow");
+})();
+
+// Mouse-interactive particle bursts
+(function(){
+  var pts=document.createElement("div");pts.id="pts";document.body.appendChild(pts);
+
+  // Ambient rising particles
+  function sp(){
+    var p=document.createElement("div");p.className="pt";
+    p.style.left=Math.random()*100+"%";p.style.bottom=Math.random()*35+"%";
+    p.style.animationDuration=(4+Math.random()*7)+"s";
+    p.style.animationDelay=Math.random()*1.5+"s";
+    p.style.width=p.style.height=(2+Math.random()*3)+"px";
+    if(Math.random()>0.6)p.style.background="#6b5cff";
+    pts.appendChild(p);setTimeout(function(){p.remove();},10000);
+  }
+  setInterval(function(){if(pts.children.length<10)sp();},700+Math.random()*1000);
+  for(var i=0;i<5;i++)sp();
+
+  // Burst particle on click/move
+  function burst(x,y,count,color){
+    for(var i=0;i<count;i++){
+      var p=document.createElement("div");
+      p.style.position="fixed";
+      p.style.left=x+"px";
+      p.style.top=y+"px";
+      p.style.width=(3+Math.random()*5)+"px";
+      p.style.height=p.style.width;
+      p.style.borderRadius="50%";
+      p.style.background=color||"#00ffcc";
+      p.style.pointerEvents="none";
+      p.style.zIndex="9999";
+      p.style.boxShadow="0 0 "+ (8+Math.random()*12)+"px "+ (color||"#00ffcc")+", 0 0 "+(20+Math.random()*30)+"px "+(color||"#00ffcc");
+      pts.appendChild(p);
+
+      var angle=Math.random()*Math.PI*2;
+      var dist=60+Math.random()*140;
+      var dx=Math.cos(angle)*dist;
+      var dy=Math.sin(angle)*dist;
+      var dur=900+Math.random()*1200;
+
+      p.animate([
+        {transform:"translate(0,0) scale(1.5)",opacity:1},
+        {transform:"translate("+dx+"px,"+dy+"px) scale(0.3)",opacity:0}
+      ],{duration:dur,easing:"cubic-bezier(0.1,0.8,0.2,1)",fill:"forwards"});
+
+      // Flicker: keep alive longer with glow pulse
+      setTimeout(function(){
+        p.animate([{opacity:p.style.opacity||0.3},{opacity:0.6},{opacity:0}],{duration:300,fill:"forwards"});
+      },dur*0.6);
+
+      setTimeout(function(){p.remove();},dur+400);
+    }
+  }
+
+  // Shooting star / meteor arc trail
+  var lastMX=0,lastMY=0,lastTrail=0;
+  document.addEventListener("mousemove",function(e){
+    var now=Date.now();
+    if(now-lastTrail<35)return;
+    lastTrail=now;
+
+    // Compute movement direction for tail offset
+    var dx=(e.clientX-lastMX);
+    var dy=(e.clientY-lastMY);
+    var speed=Math.sqrt(dx*dx+dy*dy);
+    if(speed<2){dx=0;dy=0;}
+    else{dx=dx/speed;dy=dy/speed;}
+    lastMX=e.clientX;lastMY=e.clientY;
+
+    // Bright head particle
+    var head=document.createElement("div");
+    head.style.position="fixed";
+    head.style.left=e.clientX+"px";
+    head.style.top=e.clientY+"px";
+    head.style.width="6px";head.style.height="6px";
+    head.style.borderRadius="50%";
+    head.style.background="#fff";
+    head.style.pointerEvents="none";
+    head.style.zIndex="9999";
+    head.style.boxShadow="0 0 10px #fff, 0 0 25px #00ffcc, 0 0 40px #00d4aa";
+    pts.appendChild(head);
+    head.animate([
+      {transform:"scale(1)",opacity:1},
+      {transform:"scale(0.1)",opacity:0}
+    ],{duration:500,easing:"ease-out",fill:"forwards"});
+    setTimeout(function(){head.remove();},550);
+
+    // Tail particles behind the mouse (opposite direction of movement)
+    for(var i=1;i<=5;i++){
+      var t=document.createElement("div");
+      var tx=e.clientX-dx*i*8;
+      var ty=e.clientY-dy*i*8;
+      t.style.position="fixed";
+      t.style.left=tx+"px";
+      t.style.top=ty+"px";
+      t.style.width=(4-i*0.6)+"px";
+      t.style.height=t.style.width;
+      t.style.borderRadius="50%";
+      t.style.background="#00ffcc";
+      t.style.pointerEvents="none";
+      t.style.zIndex="9998";
+      t.style.boxShadow="0 0 "+(6+i*2)+"px #00ffcc, 0 0 "+(12+i*4)+"px rgba(0,255,200,0.5)";
+      var alpha=1-i*0.18;
+      pts.appendChild(t);
+      t.animate([
+        {transform:"translate(0,0) scale(1)",opacity:alpha},
+        {transform:"translate("+(-dx*i*15)+"px,"+(-dy*i*15)+"px) scale(0.2)",opacity:0}
+      ],{duration:400+i*100,easing:"ease-out",fill:"forwards"});
+      setTimeout(function(){t.remove();},600+i*100);
+    }
+  });
+
+  // Click burst
+  document.addEventListener("click",function(e){
+    var colors=["#00ffcc","#00d4aa","#6b5cff","#ffd700","#00ccff"];
+    burst(e.clientX,e.clientY,20+Math.floor(Math.random()*12),colors[Math.floor(Math.random()*colors.length)]);
+  });
+})();
+
+// Organic dots + panel breathing
+setTimeout(function(){
+  var ds=document.querySelectorAll(".dot,.pr-dot.alive");
+  for(var i=0;i<ds.length;i++){ds[i].style.animationDuration=(1.4+Math.random()*1.8)+"s";ds[i].style.animationDelay=Math.random()*1.5+"s";}
+  var pn=document.querySelectorAll(".panel");
+  var s=document.createElement("style");
+  for(var i=0;i<pn.length;i++){
+    var dur=(4.2+Math.random()*3).toFixed(1);
+    var del=(i*0.25).toFixed(1);
+    s.textContent+=".panel:nth-child("+(i+1)+"){animation-duration:"+dur+"s;animation-delay:"+del+"s}\n";
+    s.textContent+=".panel:nth-child("+(i+1)+")::after{animation-duration:"+dur+"s;animation-delay:"+del+"s}\n";
+  }
+  document.head.appendChild(s);
+  var eg=document.querySelectorAll(".eeg-d.hot,.eeg-d.warm");
+  for(var i=0;i<eg.length;i++)eg[i].style.animationDelay=(i*0.35)+"s";
+  var dc=document.querySelectorAll(".dc");
+  for(var i=0;i<dc.length;i++)dc[i].style.animationDelay=(i*0.1)+"s";
+},200);
+
+setInterval(function(){
+  var ts=document.querySelector(".hdr-ts");
+  if(ts){var n=new Date();ts.textContent="SCAN: "+n.toISOString().replace("T"," ").slice(0,19);}
+},5000);
+</script>
+</body>
+</html>
+
+
+

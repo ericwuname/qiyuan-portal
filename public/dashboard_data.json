@@ -1,0 +1,139 @@
+{
+  "projects": [
+    {
+      "name": "短剧_楚汉规则怪谈",
+      "meta": "2026-06-14 15:59",
+      "status": "alive",
+      "pct": "50%",
+      "label": "♥ 活跃"
+    },
+    {
+      "name": "组织资产",
+      "meta": "2026-06-14 15:41",
+      "status": "alive",
+      "pct": "50%",
+      "label": "♥ 活跃"
+    },
+    {
+      "name": "市场调研",
+      "meta": "2026-06-14 13:26",
+      "status": "alive",
+      "pct": "50%",
+      "label": "♥ 活跃"
+    },
+    {
+      "name": "战略规划",
+      "meta": "2026-06-14 13:26",
+      "status": "alive",
+      "pct": "50%",
+      "label": "♥ 活跃"
+    },
+    {
+      "name": "技能评估",
+      "meta": "2026-06-14 13:26",
+      "status": "alive",
+      "pct": "50%",
+      "label": "♥ 活跃"
+    },
+    {
+      "name": "紫金花计划",
+      "meta": "2026-06-14 13:26",
+      "status": "alive",
+      "pct": "50%",
+      "label": "♥ 活跃"
+    },
+    {
+      "name": "项羽穿越模拟器",
+      "meta": "2026-06-14 13:26",
+      "status": "alive",
+      "pct": "50%",
+      "label": "♥ 活跃"
+    },
+    {
+      "name": "互动式小说开发平台",
+      "meta": "2026-06-14 11:34",
+      "status": "alive",
+      "pct": "50%",
+      "label": "♥ 活跃"
+    },
+    {
+      "name": "出师_小说编辑",
+      "meta": "2026-06-13 21:11",
+      "status": "stale",
+      "pct": "50%",
+      "label": "⚠ 2026-06-13 21:11"
+    },
+    {
+      "name": "AI-Corp",
+      "meta": "2026-06-13 00:00",
+      "status": "stale",
+      "pct": "50%",
+      "label": "⚠ 2026-06-13 00:00"
+    },
+    {
+      "name": "QVC_pypi_git上线",
+      "meta": "2026-06-12 02:04",
+      "status": "dead",
+      "pct": "50%",
+      "label": "☠ 沉寂"
+    }
+  ],
+  "beats": [
+    {
+      "ts": "34分钟前",
+      "agent": "hr-director",
+      "action": "report",
+      "target": "心电监护仪V0.1-V0.3_项目复盘",
+      "status": "done"
+    },
+    {
+      "ts": "36分钟前",
+      "agent": "qa-reviewer",
+      "action": "review",
+      "target": "心电监护仪V0.3",
+      "status": "done"
+    },
+    {
+      "ts": "38分钟前",
+      "agent": "execution-director",
+      "action": "task-complete",
+      "target": "心电监护仪V0.3_12项新特性开发",
+      "status": "done"
+    },
+    {
+      "ts": "41分钟前",
+      "agent": "design-director",
+      "action": "task-complete",
+      "target": "心电监护仪V0.3_Phase2.5设计冲刺",
+      "status": "done"
+    },
+    {
+      "ts": "44分钟前",
+      "agent": "execution-director",
+      "action": "archive",
+      "target": "知识库归档_流程优化+架构决策+工具踩坑+技能开发_4文件",
+      "status": "done"
+    },
+    {
+      "ts": "46分钟前",
+      "agent": "project-chief",
+      "action": "review",
+      "target": "心电监护仪V0.2_PDCA管道评估",
+      "status": "done"
+    },
+    {
+      "ts": "48分钟前",
+      "agent": "design-director",
+      "action": "review",
+      "target": "心电监护仪V0.2_7层框架评审",
+      "status": "done"
+    },
+    {
+      "ts": "50分钟前",
+      "agent": "brainstorm-workshop",
+      "action": "task-complete",
+      "target": "心电监护仪V0.2_第二轮矛盾突破_监护仪+AI医生",
+      "status": "done"
+    }
+  ]
+}

@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://qiyuan.beauty/sitemap.xml

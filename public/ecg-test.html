@@ -1,0 +1,84 @@
+﻿<!DOCTYPE html><html><head><meta charset="UTF-8"><title>ECG Test</title>
+<style>body{background:#080c10;margin:0;padding:20px}
+#ecg{display:block;width:100%;height:200px;background:rgba(0,255,0,0.05);border:2px solid red}
+</style></head><body>
+<h3 style="color:white">ECG Canvas Test</h3>
+<canvas id="ecg"></canvas>
+<div id="log" style="color:#0f0;font-family:monospace;margin-top:10px"></div>
+<script>
+var log=document.getElementById("log");
+function L(m){log.innerHTML+=m+"<br>";console.log(m);}
+
+L("Script start");
+var canvas=document.getElementById("ecg");
+L("Canvas: "+(canvas?"found":"NOT FOUND"));
+if(!canvas)throw"no canvas";
+
+var ctx=canvas.getContext("2d");
+L("Context: "+(ctx?"got 2d":"NO 2D CONTEXT"));
+if(!ctx)throw"no ctx";
+
+var dpr=Math.min(window.devicePixelRatio||1,2);
+L("DPR: "+dpr);
+
+function resize(){
+  var r=canvas.parentElement.getBoundingClientRect();
+  var w=r.width||800;
+  L("Resize: parent width="+r.width+" fallback w="+w);
+  canvas.width=Math.floor(w*dpr);
+  canvas.height=Math.floor(200*dpr);
+  canvas.style.width=w+"px";
+  canvas.style.height="200px";
+  L("Canvas set: "+canvas.width+"x"+canvas.height+" style:"+canvas.style.width+"x"+canvas.style.height);
+}
+resize();
+
+// Draw BRIGHT RED test rect
+ctx.fillStyle="red";
+ctx.fillRect(50*dpr,50*dpr,200*dpr,100*dpr);
+L("Drew red rect at 50,50 200x100");
+
+// Draw green cross
+ctx.strokeStyle="#0f0";
+ctx.lineWidth=3*dpr;
+ctx.beginPath();ctx.moveTo(0,100*dpr);ctx.lineTo(canvas.width,100*dpr);ctx.stroke();
+ctx.beginPath();ctx.moveTo(400*dpr,0);ctx.lineTo(400*dpr,canvas.height);ctx.stroke();
+L("Drew green crosshair");
+
+// Draw a QRS complex at center
+var cx=400*dpr, cy=100*dpr;
+ctx.strokeStyle="#00ffcc";
+ctx.lineWidth=4*dpr;
+ctx.beginPath();
+ctx.moveTo(cx-30*dpr,cy);
+ctx.lineTo(cx-20*dpr,cy+6*dpr);
+ctx.lineTo(cx-8*dpr,cy-60*dpr);
+ctx.lineTo(cx+2*dpr,cy+15*dpr);
+ctx.quadraticCurveTo(cx+10*dpr,cy+3*dpr,cx+20*dpr,cy);
+ctx.stroke();
+L("Drew QRS complex at center");
+
+// Draw some beats
+var CSS_W=canvas.width/dpr;
+var beats=[];
+for(var i=0;i<6;i++)beats.push({x:i*CSS_W/5,amp:40});
+
+for(var i=0;i<beats.length;i++){
+  var b=beats[i];
+  var sx=b.x*dpr, by=100*dpr, am=b.amp*dpr;
+  ctx.strokeStyle="#00ffcc";
+  ctx.lineWidth=2*dpr;
+  ctx.beginPath();
+  ctx.moveTo(sx-20*dpr,by);
+  ctx.lineTo(sx-12*dpr,by+4*dpr);
+  ctx.lineTo(sx-5*dpr,by-am);
+  ctx.lineTo(sx,by+10*dpr);
+  ctx.quadraticCurveTo(sx+8*dpr,by+2*dpr,sx+14*dpr,by);
+  ctx.stroke();
+  L("Beat at x="+b.x+" sx="+sx/dpr+" amp="+am/dpr);
+}
+
+L("Total beats drawn: "+beats.length);
+L("DONE - Canvas should show red rect + green cross + cyan beats");
+</script>
+</body></html>

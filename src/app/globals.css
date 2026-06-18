@@ -1,0 +1,235 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-brand-cyan: #00d4ff;
+  --color-brand-purple: #6b5cff;
+  --color-brand-orange: #ff6b35;
+  --color-brand-gold: #ffd700;
+  --color-dark-bg: #0a0a0f;
+  --color-dark-card: #0d0d14;
+  --color-dark-border: #1a1a24;
+  --color-light-bg: #f5f5f0;
+  --font-sans: "Microsoft YaHei", "PingFang SC", "Noto Sans SC", "Segoe UI", sans-serif;
+}
+
+/* ============================================
+   Design Director v4.0 · QIYUAN Brand System
+   ============================================ */
+
+/* ----- Base ----- */
+* { scroll-behavior: smooth; }
+
+body {
+  background: #0a0a0f;
+  color: #cccccc;
+  font-family: "Microsoft YaHei", "PingFang SC", "Noto Sans SC", "Segoe UI", sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection { background: rgba(255, 215, 0, 0.3); color: #fff; }
+
+/* custom scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.15); }
+
+/* ----- Brand gradients ----- */
+.brand-gradient {
+  background: linear-gradient(135deg, #00d4ff 20%, #6b5cff 45%, #ff6b35 70%, #ffd700 100%);
+}
+
+.brand-gradient-text {
+  background: linear-gradient(135deg, #00d4ff 20%, #6b5cff 45%, #ff6b35 70%, #ffd700 100%);
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  isolation: isolate;
+}
+
+/* ----- Glass cards (Design Director 7-Layer: Layer 4 Character) ----- */
+.glass-card {
+  background: rgba(13, 13, 20, 0.8);
+  -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+  border: 1px solid rgba(26, 26, 36, 0.6);
+}
+
+/* Unified card hover — brand gold glow on interaction */
+.card-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.card-hover:hover {
+  border-color: rgba(255, 215, 0, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(255, 215, 0, 0.04), 0 2px 8px rgba(0,0,0,0.3);
+}
+
+/* ----- Reveal animation (Layer 6 Surprise) ----- */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ----- Hero glow orb (Layer 7 Shareable: screenshot-worthy) ----- */
+.hero-glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.12;
+  pointer-events: none;
+}
+.hero-glow-cyan  { background: #00d4ff; width: 400px; height: 400px; }
+.hero-glow-purple { background: #6b5cff; width: 350px; height: 350px; }
+.hero-glow-gold   { background: #ffd700; width: 250px; height: 250px; opacity: 0.08; }
+
+/* ----- Nav link underline animation ----- */
+.nav-link {
+  position: relative;
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  width: 0;
+  height: 1px;
+  background: #ffd700;
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+}
+.nav-link:hover::after {
+  width: 100%;
+}
+
+/* ----- Page section spacing (Layer 5 Breathing Room) ----- */
+.section-py {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+}
+@media (min-width: 640px)  { .section-py { padding-top: 6rem; padding-bottom: 6rem; } }
+@media (min-width: 1024px) { .section-py { padding-top: 8rem; padding-bottom: 8rem; } }
+
+/* ----- Section title ----- */
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  margin-bottom: 0.5rem;
+}
+@media (min-width: 640px)  { .section-title { font-size: 1.75rem; letter-spacing: 0.35em; } }
+@media (min-width: 1024px) { .section-title { font-size: 2.25rem; letter-spacing: 0.5em; } }
+
+.section-subtitle {
+  font-size: 0.625rem;
+  letter-spacing: 0.25em;
+  color: #666;
+  text-transform: uppercase;
+}
+@media (min-width: 640px) { .section-subtitle { font-size: 0.7rem; } }
+
+/* ----- Button system ----- */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.5rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  background: rgba(255, 215, 0, 0.08);
+  color: #ffd700;
+  font-size: 0.8rem;
+  letter-spacing: 0.15em;
+  transition: all 0.3s ease;
+}
+.btn-primary:hover {
+  background: rgba(255, 215, 0, 0.15);
+  border-color: rgba(255, 215, 0, 0.5);
+  transform: translateY(-1px);
+}
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.5rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: transparent;
+  color: #999;
+  font-size: 0.8rem;
+  letter-spacing: 0.15em;
+  transition: all 0.3s ease;
+}
+.btn-ghost:hover {
+  border-color: rgba(255, 255, 255, 0.25);
+  color: #fff;
+}
+
+/* ----- Badge / Tag ----- */
+.badge {
+  display: inline-block;
+  padding: 0.15rem 0.6rem;
+  border-radius: 9999px;
+  font-size: 0.625rem;
+  letter-spacing: 0.15em;
+  border: 1px solid;
+}
+
+/* ----- Shimmer animation ----- */
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ----- Mobile menu ----- */
+.mobile-menu-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 49;
+  background: rgba(0, 0, 0, 0.6);
+  -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+.mobile-menu-overlay.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.mobile-menu-panel {
+  position: fixed;
+  top: 0;
+  right: -300px;
+  width: 280px;
+  height: 100vh;
+  z-index: 50;
+  background: #0a0a0f;
+  border-left: 1px solid #1a1a24;
+  padding: 24px;
+  transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow-y: auto;
+}
+.mobile-menu-panel.open {
+  right: 0;
+}
+
+/* ----- Footer gradient top border ----- */
+.footer-border {
+  border-top: 1px solid rgba(26, 26, 36, 1);
+}
+
+/* ----- Focus ring for accessibility ----- */
+*:focus-visible {
+  outline: 2px solid rgba(255, 215, 0, 0.5);
+  outline-offset: 2px;
+  border-radius: 4px;
+}

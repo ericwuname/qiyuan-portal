@@ -23,6 +23,10 @@ export const t = {
   navPhilosophy: "组织哲学",
   navContact: "联系我们",
   navDashboard: "运营看板",
+  navPillarAbout: "关于启元",
+  navPillarCapability: "能力矩阵",
+  navPillarStrategy: "战略布局",
+  navPillarUpdates: "动态",
 
   pageAbout: "关于我们",
   pageProjects: "项目总览",

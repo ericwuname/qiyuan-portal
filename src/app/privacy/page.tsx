@@ -1,41 +1,40 @@
-export const metadata = {
-  title: "隐私政策 · 启元智能",
-};
+export const metadata = { title: "Privacy Policy · Qiyuan Intelligence" };
 
 export default function Privacy() {
   return (
-    <main className="min-h-screen pt-24 pb-16 px-4 sm:px-6">
-      <div className="mx-auto max-w-3xl">
-        <h1 className="text-2xl sm:text-3xl font-bold tracking-[6px] brand-gradient-text mb-2">隐私政策</h1>
+    <div className="min-h-screen bg-black text-white">
+      <div className="fixed inset-0 pointer-events-none">
+        <div className="absolute top-20 right-20 w-[400px] h-[400px] rounded-full bg-brand-purple/5 blur-[100px]" />
+      </div>
+      <div className="relative max-w-3xl mx-auto px-6 py-24">
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-[6px] brand-gradient-text mb-2">Privacy Policy</h1>
         <p className="text-xs tracking-[3px] text-gray-600 mb-10">PRIVACY POLICY</p>
-
-        <div className="space-y-6 text-sm leading-relaxed text-gray-400">
+        <div className="space-y-6 text-sm leading-relaxed text-gray-400 bg-dark-card rounded-2xl border border-white/[0.06] p-8">
           <section>
-            <h2 className="text-base font-bold text-white tracking-[2px] mb-2">1. 信息收集</h2>
-            <p>本网站通过联系表单收集您主动提供的姓名和电子邮箱，仅用于回复您的留言。我们不使用 Cookies 追踪、不收集浏览行为数据、不嵌入第三方分析工具。</p>
+            <h2 className="text-base font-bold text-white tracking-[2px] mb-2">1. Information Collection</h2>
+            <p>This website collects name and email you actively provide via contact form, used only to reply to your message. We do not use tracking cookies, collect browsing behavior, or embed third-party analytics.</p>
           </section>
           <section>
-            <h2 className="text-base font-bold text-white tracking-[2px] mb-2">2. 信息存储</h2>
-            <p>您提交的联系信息存储在 Turso 数据库中（部署于 Vercel 边缘网络），仅启元智能管理员可访问。我们不会将您的信息出售、分享或用于任何商业目的。</p>
+            <h2 className="text-base font-bold text-white tracking-[2px] mb-2">2. Information Storage</h2>
+            <p>Contact information is stored in Turso database (deployed on Vercel edge network), accessible only by Qiyuan administrators. We do not sell, share, or use your information for any commercial purpose.</p>
           </section>
           <section>
-            <h2 className="text-base font-bold text-white tracking-[2px] mb-2">3. 您的权利</h2>
-            <p>您有权随时要求查看、更正或删除您的留言数据。请通过 contact@qiyuan.beauty 联系我们。</p>
+            <h2 className="text-base font-bold text-white tracking-[2px] mb-2">3. Your Rights</h2>
+            <p>You have the right to request viewing, correction, or deletion of your message data at any time. Contact us at contact@qiyuan.beauty.</p>
           </section>
           <section>
-            <h2 className="text-base font-bold text-white tracking-[2px] mb-2">4. 第三方服务</h2>
-            <p>本网站托管于 Vercel（美国）和 Turso（边缘网络）。这些服务提供商遵循其各自的隐私政策。我们不在中国境内存储任何用户数据。</p>
+            <h2 className="text-base font-bold text-white tracking-[2px] mb-2">4. Third-Party Services</h2>
+            <p>This website is hosted on Vercel (US) and Turso (edge network). These providers follow their respective privacy policies. We store no user data within China.</p>
           </section>
           <section>
-            <h2 className="text-base font-bold text-white tracking-[2px] mb-2">5. 更新</h2>
-            <p>本政策可能更新，更新后将在本页面发布。最后更新：2026年6月。</p>
+            <h2 className="text-base font-bold text-white tracking-[2px] mb-2">5. Updates</h2>
+            <p>This policy may update; changes will be posted on this page. Last updated: June 2026.</p>
           </section>
         </div>
-
         <div className="mt-12 pt-6 border-t border-dark-border">
-          <a href="/" className="text-xs tracking-[2px] text-brand-gold hover:underline">← 返回首页</a>
+          <a href="/" className="text-xs tracking-[2px] text-brand-gold hover:underline">← Back Home</a>
         </div>
       </div>
-    </main>
+    </div>
   );
 }

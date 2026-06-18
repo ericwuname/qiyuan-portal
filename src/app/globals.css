@@ -233,3 +233,12 @@ body {
   outline-offset: 2px;
   border-radius: 4px;
 }
+/* ===== Design Polisher Fix: 6-tier font scale ===== */
+.tier-micro   { font-size: 0.4375rem; line-height: 1.4; }  /* 7px  — 超微：标签内文字/时间戳 */
+.tier-tiny    { font-size: 0.5625rem; line-height: 1.4; }  /* 9px  — 微字：辅助说明/图例 */
+.tier-small   { font-size: 0.6875rem; line-height: 1.5; }  /* 11px — 小字：导航/卡片副标题 */
+.tier-body    { font-size: 0.875rem;  line-height: 1.6; }  /* 14px — 正文：段落/描述 */
+.tier-subtitle{ font-size: 1.125rem;  line-height: 1.3; }  /* 18px — 副标题：区块标题 */
+.tier-title   { font-size: 1.5rem;    line-height: 1.2; }  /* 24px — 标题：页面主标题 */
+@media (min-width: 640px)  { .tier-title { font-size: 1.75rem; } .tier-subtitle { font-size: 1.25rem; } }
+@media (min-width: 1024px) { .tier-title { font-size: 2.25rem; } .tier-subtitle { font-size: 1.5rem; } }
